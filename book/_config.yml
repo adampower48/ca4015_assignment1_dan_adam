@@ -1,8 +1,14 @@
 # Book settings
-title: My sample book
-author: The Jupyter Book Community
-logo: logo.png
+title: CA4015 Assignment 1 Book
+author: Daniel O'Boyle and Adam Power
+logo: dcu_logo.png
 
 latex:
   latex_documents:
     targetname: book.tex
+
+repository:
+    url: https://github.com/adampower48/ca4015_assignment1_dan_adam
+    path_to_book: book
+html:
+  use_repository_button: true
