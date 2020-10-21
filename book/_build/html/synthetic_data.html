@@ -240,118 +240,29 @@
                 
   <div class="section" id="generating-synthetic-data">
 <h1>Generating Synthetic Data<a class="headerlink" href="#generating-synthetic-data" title="Permalink to this headline">¶</a></h1>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/parameter_igt_orl.csv&quot;</span><span class="p">)</span>
-<span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID_label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span> <span class="c1"># number label for old/young</span>
-<span class="n">df_orl</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>subjID</th>
-      <th>A+</th>
-      <th>A-</th>
-      <th>K</th>
-      <th>BetaF</th>
-      <th>BetaP</th>
-      <th>A+-A-</th>
-      <th>subjID_label</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>old</td>
-      <td>0.324444</td>
-      <td>0.068862</td>
-      <td>1.502130</td>
-      <td>2.523191</td>
-      <td>-5.547480</td>
-      <td>0.255581</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>old</td>
-      <td>0.885744</td>
-      <td>0.120145</td>
-      <td>0.012591</td>
-      <td>3.193244</td>
-      <td>-9.159800</td>
-      <td>0.765598</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>old</td>
-      <td>0.318205</td>
-      <td>0.078128</td>
-      <td>1.927309</td>
-      <td>0.615708</td>
-      <td>9.272336</td>
-      <td>0.240077</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>old</td>
-      <td>0.728192</td>
-      <td>0.106737</td>
-      <td>0.388407</td>
-      <td>2.595746</td>
-      <td>-2.239555</td>
-      <td>0.621455</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>old</td>
-      <td>0.356229</td>
-      <td>0.091987</td>
-      <td>1.810674</td>
-      <td>0.508605</td>
-      <td>9.825699</td>
-      <td>0.264241</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 <div class="section" id="fitting-distributions-to-the-parameters">
 <h2>Fitting distributions to the parameters<a class="headerlink" href="#fitting-distributions-to-the-parameters" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution">Beta(a,B) distribution</a> can be used to model a large variety of distributions.<br />
-It has shape parameters a and B, and location/scale parameters.</p>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution">Beta(<span class="math notranslate nohighlight">\(\alpha\)</span>,<span class="math notranslate nohighlight">\(\beta\)</span>) distribution</a> can be used to model a large variety of distributions.<br />
+It has shape parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>, and location/scale parameters.<br />
+Details of the functions used to model the distributions can be found <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html">here</a></p>
 <div class="section" id="modelling-a-single-parameter">
 <h3>Modelling a single parameter<a class="headerlink" href="#modelling-a-single-parameter" title="Permalink to this headline">¶</a></h3>
+<p>Here we show show fitting the beta distribution works for the <span class="math notranslate nohighlight">\(\beta_P\)</span> parameter. The plot shows the fitted distribution in orange against the real data in blue.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;BetaP&quot;</span><span class="p">])</span>
-<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;alpha:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;beta:&quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;location:&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;scale:&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(68.88143534616461, 877.7287713924625, -46.975479728775724, 645.7067406640599)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>alpha: 68.88143534616461
+beta: 877.7287713924625
+location: -46.975479728775724
+scale: 645.7067406640599
 </pre></div>
 </div>
 </div>
@@ -374,7 +285,7 @@ It has shape parameters a and B, and location/scale parameters.</p>
 </div>
 <div class="section" id="applying-to-all-parameters">
 <h3>Applying to all parameters<a class="headerlink" href="#applying-to-all-parameters" title="Permalink to this headline">¶</a></h3>
-<p>First we define a function to get the beta parameters</p>
+<p>First we define a function to fit the beta distribution to a single column.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_beta</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
@@ -400,7 +311,7 @@ dtype: float64
 </div>
 </div>
 </div>
-<p>Then we can apply this accross all of our parameters</p>
+<p>Then we can apply this across all of our parameters to get model each one. We can see the flexibility of the beta distribution here as it can fit well to each parameter.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-stdout --no-display
@@ -506,9 +417,9 @@ dtype: float64
 </div>
 <div class="section" id="generating-new-data">
 <h3>Generating new data<a class="headerlink" href="#generating-new-data" title="Permalink to this headline">¶</a></h3>
-<p>By modelling these parameters, we can create new data by sampling from their distributions.<br />
-For now we assume that each parameter is independent, though this is probably not the case.<br />
-Here we generate 5000 fake data points.</p>
+<p>By modelling these parameters, we can create new data by sampling from their distributions. The generated parameters could then be used to create an ORL model which represents a new person.<br />
+For now we assume that each parameter is independent, though this may not be the case in reality.<br />
+Here we generate 5000 fake data points based on the entire dataset. You can see that the new data is very similar to the real data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
@@ -550,43 +461,43 @@ Here we generate 5000 fake data points.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.152015</td>
-      <td>0.032741</td>
-      <td>1.641346</td>
-      <td>1.477557</td>
-      <td>-2.195585</td>
+      <td>0.176203</td>
+      <td>0.039892</td>
+      <td>1.254919</td>
+      <td>3.043307</td>
+      <td>-3.805704</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.162995</td>
-      <td>0.134903</td>
-      <td>0.010896</td>
-      <td>1.858609</td>
-      <td>5.947195</td>
+      <td>0.465209</td>
+      <td>0.035922</td>
+      <td>0.520399</td>
+      <td>4.437186</td>
+      <td>6.245248</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.215824</td>
-      <td>0.070214</td>
-      <td>1.428392</td>
-      <td>1.106943</td>
-      <td>-3.285995</td>
+      <td>0.205180</td>
+      <td>0.049590</td>
+      <td>0.553471</td>
+      <td>1.093211</td>
+      <td>-0.255820</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.383363</td>
-      <td>0.114699</td>
-      <td>1.292603</td>
-      <td>1.587528</td>
-      <td>2.072642</td>
+      <td>0.160102</td>
+      <td>0.063360</td>
+      <td>1.703708</td>
+      <td>-0.209519</td>
+      <td>-4.496044</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.084456</td>
-      <td>0.140321</td>
-      <td>0.428799</td>
-      <td>1.959463</td>
-      <td>8.962964</td>
+      <td>0.081312</td>
+      <td>0.076992</td>
+      <td>0.442301</td>
+      <td>-0.754334</td>
+      <td>-2.519056</td>
     </tr>
   </tbody>
 </table>
@@ -606,7 +517,7 @@ Here we generate 5000 fake data points.</p>
 </div>
 <div class="section" id="modelling-the-smaller-groups">
 <h3>Modelling the smaller groups<a class="headerlink" href="#modelling-the-smaller-groups" title="Permalink to this headline">¶</a></h3>
-<p>As we saw when we explored the data, the young and old groups differ quite a bit, and the old group could be clustered into two sets.</p>
+<p>As we saw when we explored the data and during clustering, the young and old groups differ quite a bit, and the old group could be clustered into two distinct sets. We can apply the same methods to model each of these groups and generate new data for them. Here we split the old group into “Type A” and “Type B”.</p>
 <div class="section" id="young">
 <h4>Young<a class="headerlink" href="#young" title="Permalink to this headline">¶</a></h4>
 <div class="cell tag_hide-input docutils container">
@@ -958,6 +869,10 @@ Here we generate 5000 fake data points.</p>
 <img alt="_images/synthetic_data_31_0.png" src="_images/synthetic_data_31_0.png" />
 </div>
 </div>
+<p>This lets us compare the parameters across each of the different groups. We can see that the A+ and A- parameters are fairly similar for all of the groups, spread out with a slight skew to the left.<br />
+The K parameter shows a difference between young and old, concentrated centrally versus much more uniform.<br />
+The <span class="math notranslate nohighlight">\(\beta_F\)</span> parameter is normally distributed for both the young and old (type A) groups, however with the type B group we see a degredation in the normal shape, being much closer to a uniform distribution.
+Finally the <span class="math notranslate nohighlight">\(\beta_P\)</span> parameter clearly shows the three distinct normal distributions. Notably the type B group has much higher values than both the young and type A groups which have similar distributions. In <a class="reference external" href="http://www.labsi.org/cognitive/Becharaetal1997.pdf">[1]</a>, they note that participants with damage to their prefrontal cortex continue to choose bad decks even in the face of punishing outcomes, so this high value of perserverance could be explained by this.</p>
 </div>
 </div>
 </div>

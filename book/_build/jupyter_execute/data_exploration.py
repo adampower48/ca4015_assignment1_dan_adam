@@ -23,15 +23,15 @@ df_orl.head()
 # - A+: Reward Learning Rate
 # - A-: Punishment Learning Rate
 # - K: Decay
-# - BetaF: Outcome freq
-# - BetaP: Outcome perseverance
+# - $\beta_F$ (BetaF): Outcome freq
+# - $\beta_P$ (BetaP): Outcome perseverance
 # 
 
 # ## Visualising the dataset
 
 # ### Entire dataset
 
-# Looking at the whole dataset, each parameter seems to follow a distribution nicely. A+ and A- are skewed to the left, K is more uniform but slightly skewed left, and both BetaF and BetaP follow normal distributions.  
+# Looking at the whole dataset, each parameter seems to follow a distribution nicely. A+ and A- are skewed to the left, K is more uniform but slightly skewed left, and both $\beta_F$ and $\beta_P$ roughly follow normal distributions.  
 # There is also a clear difference in the variation between the groups. The young group is much more concentrated, and the old is much more spread out.
 # 
 
@@ -41,6 +41,8 @@ df_orl.head()
 pd.plotting.scatter_matrix(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]], figsize=(10,10), hist_kwds=dict(bins=50), c=df_orl["subjID_label"], cmap="Set1")
 plt.show()
 
+
+# The parameter distributions for the two groups are not the same. The A+ parameter for the old group is much more varied. The K parameter is skewed much more to the right for the old group, and the $\beta_P$ seems to actually have two distributions; One similar to the young group, and another concentrated around the value 10.
 
 # ### Young Group
 
@@ -62,11 +64,9 @@ pd.plotting.scatter_matrix(df_orl_old[["A+", "A-", "K", "BetaF", "BetaP"]], figs
 plt.show()
 
 
-# The parameter distributions for the two groups are not the same. The A+ parameter for the old group is much more varied. The K parameter is skewed much more to the right for the old group, and the BetaP seems to actually have two distributions; One similar to the young group, and another concentrated around the value 10.
-
 # ### Splitting up the old group
 
-# We can split up the old group futher based on the two distributions we see for BetaP. **BetaP=7** is chosen here as the value to split them.  
+# We can split up the old group futher based on the two distributions we see for $\beta_P$. **$\beta_P$=7** is chosen here as the value to split them.  
 # The other parameters do not seem to have any difference between these groups, with the exception of **K**, which is slightly skewed left or right depending on the group.
 # We are dealing with less data as we drill down further, so it would be difficult to come to any solid conclusions by going deeper.
 

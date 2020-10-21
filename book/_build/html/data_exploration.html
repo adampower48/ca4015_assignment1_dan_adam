@@ -340,15 +340,15 @@
 <li><p>A+: Reward Learning Rate</p></li>
 <li><p>A-: Punishment Learning Rate</p></li>
 <li><p>K: Decay</p></li>
-<li><p>BetaF: Outcome freq</p></li>
-<li><p>BetaP: Outcome perseverance</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_F\)</span> (BetaF): Outcome freq</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_P\)</span> (BetaP): Outcome perseverance</p></li>
 </ul>
 </div>
 <div class="section" id="visualising-the-dataset">
 <h2>Visualising the dataset<a class="headerlink" href="#visualising-the-dataset" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="entire-dataset">
 <h3>Entire dataset<a class="headerlink" href="#entire-dataset" title="Permalink to this headline">¶</a></h3>
-<p>Looking at the whole dataset, each parameter seems to follow a distribution nicely. A+ and A- are skewed to the left, K is more uniform but slightly skewed left, and both BetaF and BetaP follow normal distributions.<br />
+<p>Looking at the whole dataset, each parameter seems to follow a distribution nicely. A+ and A- are skewed to the left, K is more uniform but slightly skewed left, and both <span class="math notranslate nohighlight">\(\beta_F\)</span> and <span class="math notranslate nohighlight">\(\beta_P\)</span> roughly follow normal distributions.<br />
 There is also a clear difference in the variation between the groups. The young group is much more concentrated, and the old is much more spread out.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -361,6 +361,7 @@ There is also a clear difference in the variation between the groups. The young 
 <img alt="_images/data_exploration_7_0.png" src="_images/data_exploration_7_0.png" />
 </div>
 </div>
+<p>The parameter distributions for the two groups are not the same. The A+ parameter for the old group is much more varied. The K parameter is skewed much more to the right for the old group, and the <span class="math notranslate nohighlight">\(\beta_P\)</span> seems to actually have two distributions; One similar to the young group, and another concentrated around the value 10.</p>
 </div>
 <div class="section" id="young-group">
 <h3>Young Group<a class="headerlink" href="#young-group" title="Permalink to this headline">¶</a></h3>
@@ -373,7 +374,7 @@ There is also a clear difference in the variation between the groups. The young 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/data_exploration_9_0.png" src="_images/data_exploration_9_0.png" />
+<img alt="_images/data_exploration_10_0.png" src="_images/data_exploration_10_0.png" />
 </div>
 </div>
 </div>
@@ -388,14 +389,13 @@ There is also a clear difference in the variation between the groups. The young 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/data_exploration_11_0.png" src="_images/data_exploration_11_0.png" />
+<img alt="_images/data_exploration_12_0.png" src="_images/data_exploration_12_0.png" />
 </div>
 </div>
-<p>The parameter distributions for the two groups are not the same. The A+ parameter for the old group is much more varied. The K parameter is skewed much more to the right for the old group, and the BetaP seems to actually have two distributions; One similar to the young group, and another concentrated around the value 10.</p>
 </div>
 <div class="section" id="splitting-up-the-old-group">
 <h3>Splitting up the old group<a class="headerlink" href="#splitting-up-the-old-group" title="Permalink to this headline">¶</a></h3>
-<p>We can split up the old group futher based on the two distributions we see for BetaP. <strong>BetaP=7</strong> is chosen here as the value to split them.<br />
+<p>We can split up the old group futher based on the two distributions we see for <span class="math notranslate nohighlight">\(\beta_P\)</span>. <strong><span class="math notranslate nohighlight">\(\beta_P\)</span>=7</strong> is chosen here as the value to split them.<br />
 The other parameters do not seem to have any difference between these groups, with the exception of <strong>K</strong>, which is slightly skewed left or right depending on the group.
 We are dealing with less data as we drill down further, so it would be difficult to come to any solid conclusions by going deeper.</p>
 <div class="cell docutils container">

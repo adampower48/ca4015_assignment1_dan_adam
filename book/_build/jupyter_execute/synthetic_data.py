@@ -22,16 +22,21 @@ df_orl.head()
 
 # ## Fitting distributions to the parameters
 
-# The [Beta(a,B) distribution](https://en.wikipedia.org/wiki/Beta_distribution) can be used to model a large variety of distributions.  
-# It has shape parameters a and B, and location/scale parameters.  
+# The [Beta($\alpha$,$\beta$) distribution](https://en.wikipedia.org/wiki/Beta_distribution) can be used to model a large variety of distributions.  
+# It has shape parameters $\alpha$ and $\beta$, and location/scale parameters.  
+# Details of the functions used to model the distributions can be found [here](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html)
 
 # ### Modelling a single parameter
+# Here we show show fitting the beta distribution works for the $\beta_P$ parameter. The plot shows the fitted distribution in orange against the real data in blue.  
 
 # In[3]:
 
 
 a, b, loc, scale = beta.fit(df_orl["BetaP"])
-a, b, loc, scale
+print("alpha:", a)
+print("beta:", b)
+print("location:", loc)
+print("scale:", scale)
 
 
 # In[4]:
@@ -47,7 +52,7 @@ plt.show()
 
 # ### Applying to all parameters
 
-# First we define a function to get the beta parameters
+# First we define a function to fit the beta distribution to a single column.
 
 # In[5]:
 
@@ -64,7 +69,7 @@ def fit_beta(s: pd.Series):
 fit_beta(df_orl["BetaP"])
 
 
-# Then we can apply this accross all of our parameters
+# Then we can apply this across all of our parameters to get model each one. We can see the flexibility of the beta distribution here as it can fit well to each parameter.  
 
 # In[6]:
 
@@ -100,9 +105,9 @@ plt.show()
 
 # ### Generating new data
 
-# By modelling these parameters, we can create new data by sampling from their distributions.  
-# For now we assume that each parameter is independent, though this is probably not the case.  
-# Here we generate 5000 fake data points.  
+# By modelling these parameters, we can create new data by sampling from their distributions. The generated parameters could then be used to create an ORL model which represents a new person.  
+# For now we assume that each parameter is independent, though this may not be the case in reality.  
+# Here we generate 5000 fake data points based on the entire dataset. You can see that the new data is very similar to the real data.
 
 # In[8]:
 
@@ -125,7 +130,7 @@ plt.show()
 
 # ### Modelling the smaller groups
 
-# As we saw when we explored the data, the young and old groups differ quite a bit, and the old group could be clustered into two sets.
+# As we saw when we explored the data and during clustering, the young and old groups differ quite a bit, and the old group could be clustered into two distinct sets. We can apply the same methods to model each of these groups and generate new data for them. Here we split the old group into "Type A" and "Type B".  
 
 # #### Young
 
@@ -203,6 +208,11 @@ for i, param in enumerate(beta_params_young.columns):
     
 plt.show()
 
+
+# This lets us compare the parameters across each of the different groups. We can see that the A+ and A- parameters are fairly similar for all of the groups, spread out with a slight skew to the left.  
+# The K parameter shows a difference between young and old, concentrated centrally versus much more uniform.  
+# The $\beta_F$ parameter is normally distributed for both the young and old (type A) groups, however with the type B group we see a degredation in the normal shape, being much closer to a uniform distribution. 
+# Finally the $\beta_P$ parameter clearly shows the three distinct normal distributions. Notably the type B group has much higher values than both the young and type A groups which have similar distributions. In [[1]](http://www.labsi.org/cognitive/Becharaetal1997.pdf), they note that participants with damage to their prefrontal cortex continue to choose bad decks even in the face of punishing outcomes, so this high value of perserverance could be explained by this.  
 
 # In[ ]:
 

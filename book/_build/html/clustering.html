@@ -194,6 +194,16 @@
      K Means Clustering for BetaF and BetaP vs Old and Young
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#betap-cluster-findings">
+     BetaP Cluster Findings
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#betak-cluster-findings">
+     BetaK Cluster Findings
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -354,6 +364,7 @@
 <h2>K-Means<a class="headerlink" href="#k-means" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="k-means-clustering-for-betaf-and-betap-vs-old-and-young">
 <h3>K Means Clustering for BetaF and BetaP vs Old and Young<a class="headerlink" href="#k-means-clustering-for-betaf-and-betap-vs-old-and-young" title="Permalink to this headline">¶</a></h3>
+<p>Here we are investigating the clustering between two of the paramaters of the model. BetaF relates to the person’s outcome frequency. Furthermore, when this parameter is less than zero it means the person prefers decks of low win frequency, and a high BetaF score means that they prefer decks with a high win frequency. BetaP is the parameter which accounts for the participant’s perseverence in choosing decks. Values less than zero indicate a tendency to switch between decks and values greater than zero means the participant likes to stick with the same deck more often.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl_betas</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;subjID_label&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span>
@@ -367,17 +378,8 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaF&#39;</span><span class="p">],</span> <span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaP&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span> <span class="n">kmeans_betas</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s2">&quot;Set1&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">centroids_betas</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">centroids_betas</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/clustering_5_0.png" src="_images/clustering_5_0.png" />
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaF&#39;</span><span class="p">],</span> <span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaP&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;subjID_label&#39;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1_r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;BetaF&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;BetaP&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -386,6 +388,50 @@
 <img alt="_images/clustering_6_0.png" src="_images/clustering_6_0.png" />
 </div>
 </div>
+<p>There are clearly three defined clusters when plotting these two parameters with the data. Let’s compare this with the plot showing young vs old participants.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaF&#39;</span><span class="p">],</span> <span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaP&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;subjID_label&#39;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1_r&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;BetaF&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;BetaP&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#have to find out how to show legend for young and old</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_8_0.png" src="_images/clustering_8_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#This next section could go under different headings and could go in Findings/Results/Conclusions etc. Inserting here now as</span>
+<span class="c1">#it is easy to see with plots just above it</span>
+<span class="c1">#Wording could be improved but will be refined later</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="betap-cluster-findings">
+<h3>BetaP Cluster Findings<a class="headerlink" href="#betap-cluster-findings" title="Permalink to this headline">¶</a></h3>
+<p>This second plot helps to understand the clusters in the first graph more clearly now. The clusters are primarily based on three different groups of participants and their balues for BetaP, the perseverence parameter. The old people are mainly split into two clusters: those with a high value for perseverence and those with a low value for perseverence. The middle cluster consists mainly of young people, whose values for perseverence are more neutral, lying between +-5 in BetaP.</p>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl</span><span class="p">[</span><span class="n">df_orl</span><span class="o">.</span><span class="n">BetaF</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>        
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>143
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="betak-cluster-findings">
+<h3>BetaK Cluster Findings<a class="headerlink" href="#betak-cluster-findings" title="Permalink to this headline">¶</a></h3>
+<p>As expected, most participants prefer a higher winning frequency, with 143 of the 153 participants having a BetaF score greater than 0. The outcome frequency value is also noticeable between the clusters. The cluster of primarily old people with a high perseverence score has lower average outcome frequency than the group of primarily old people with a low perseverence score. The central cluster of mainly young people is more neutral, with the majority of the participants having values between 0 and 3.</p>
 </div>
 </div>
 <div class="section" id="hierarchical-agglomerative">
@@ -420,7 +466,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_10_0.png" src="_images/clustering_10_0.png" />
+<img alt="_images/clustering_18_0.png" src="_images/clustering_18_0.png" />
 </div>
 </div>
 <p>Show how the entire dataset is clustered with the two parameters</p>
@@ -432,7 +478,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_12_0.png" src="_images/clustering_12_0.png" />
+<img alt="_images/clustering_20_0.png" src="_images/clustering_20_0.png" />
 </div>
 </div>
 </div>
@@ -466,7 +512,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_16_0.png" src="_images/clustering_16_0.png" />
+<img alt="_images/clustering_24_0.png" src="_images/clustering_24_0.png" />
 </div>
 </div>
 <p>Show how entire dataset is clustered based on all params</p>
@@ -478,7 +524,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_18_0.png" src="_images/clustering_18_0.png" />
+<img alt="_images/clustering_26_0.png" src="_images/clustering_26_0.png" />
 </div>
 </div>
 </div>
@@ -509,7 +555,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_22_0.png" src="_images/clustering_22_0.png" />
+<img alt="_images/clustering_30_0.png" src="_images/clustering_30_0.png" />
 </div>
 </div>
 </div>
@@ -542,7 +588,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_25_0.png" src="_images/clustering_25_0.png" />
+<img alt="_images/clustering_33_0.png" src="_images/clustering_33_0.png" />
 </div>
 </div>
 <p>There seems to be much better clusters for the BetaF &amp; BetaP parameters.</p>
@@ -573,7 +619,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_29_0.png" src="_images/clustering_29_0.png" />
+<img alt="_images/clustering_37_0.png" src="_images/clustering_37_0.png" />
 </div>
 </div>
 </div>
