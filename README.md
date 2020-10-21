@@ -9,7 +9,7 @@ Requirements:
 
 A full list of the packages used can be found in [book/requirements.txt](./book/requirements.txt)  
 
-Build the book by running:
+Build the book by running:  
 `jupyter-book clean book`  
 `jupyter-book build book`  
 
