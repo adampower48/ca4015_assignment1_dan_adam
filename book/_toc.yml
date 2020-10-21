@@ -1,9 +1,4 @@
-- file: intro
-- file: content
-  sections:
-    - file: markdown
-    - file: notebooks
-
+- file: introduction
 - file: data_exploration
 - file: clustering
 - file: synthetic_data
