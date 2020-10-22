@@ -184,15 +184,15 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#fitting-distributions-to-the-parameters">
-   Fitting distributions to the parameters
+  <a class="reference internal nav-link" href="#choosing-the-distributions">
+   Choosing the distributions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modelling-a-single-parameter">
+   Modelling a single parameter
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#modelling-a-single-parameter">
-     Modelling a single parameter
-    </a>
-   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#applying-to-all-parameters">
      Applying to all parameters
@@ -203,27 +203,46 @@
      Generating new data
     </a>
    </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#modelling-the-smaller-groups">
+   Modelling the smaller groups
+  </a>
+  <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#modelling-the-smaller-groups">
-     Modelling the smaller groups
+    <a class="reference internal nav-link" href="#young">
+     Young
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#old">
+     Old
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#young">
-       Young
+      <a class="reference internal nav-link" href="#type-a">
+       Type A
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#old">
-       Old
-      </a>
-     </li>
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#results">
-       Results
+      <a class="reference internal nav-link" href="#type-b">
+       Type B
       </a>
      </li>
     </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#putting-the-groups-back-together">
+     Putting the groups back together
+    </a>
    </li>
   </ul>
  </li>
@@ -240,29 +259,32 @@
                 
   <div class="section" id="generating-synthetic-data">
 <h1>Generating Synthetic Data<a class="headerlink" href="#generating-synthetic-data" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="fitting-distributions-to-the-parameters">
-<h2>Fitting distributions to the parameters<a class="headerlink" href="#fitting-distributions-to-the-parameters" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution">Beta(<span class="math notranslate nohighlight">\(\alpha\)</span>,<span class="math notranslate nohighlight">\(\beta\)</span>) distribution</a> can be used to model a large variety of distributions.<br />
-It has shape parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>, and location/scale parameters.<br />
-Details of the functions used to model the distributions can be found <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html">here</a></p>
+<div class="section" id="choosing-the-distributions">
+<h2>Choosing the distributions<a class="headerlink" href="#choosing-the-distributions" title="Permalink to this headline">¶</a></h2>
+<p>The parameters seem to follow 3 distinct distributions:</p>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">Normal distribution</a>: Both <span class="math notranslate nohighlight">\(\beta_F\)</span> and <span class="math notranslate nohighlight">\(\beta_P\)</span> seem to be normally distributed. This is parameterised by the mean <span class="math notranslate nohighlight">\(\mu\)</span> (loc) and standard deviation <span class="math notranslate nohighlight">\(\sigma\)</span> (scale) of the data.<br />
+Details of the functions used to model this distribution can be found <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html">here</a>.</p></li>
+<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution">Beta(<span class="math notranslate nohighlight">\(\alpha\)</span>,<span class="math notranslate nohighlight">\(\beta\)</span>) distribution</a>: A+ and A- are within the range [0, 1], which means we can use this distribution to model them. The beta distribution can be used to model a large variety of distributions within this range with shape parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>.<br />
+Details of the functions used to model the distributions can be found <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html">here</a></p></li>
+<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Gamma_distribution">Gamma distribution</a>: Finally, the K parameter seems to roughly follow a poisson distribution which would represent the rate of decay. As the poisson distribution is only valid for integer values, we can use the gamma function as a continuous approximation. The gamma function is parameterised by shape <span class="math notranslate nohighlight">\(\alpha\)</span> and scale <span class="math notranslate nohighlight">\(\theta\)</span>.<br />
+Details of the functions used to model the distributions can be found <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gamma.html">here</a></p></li>
+</ul>
+</div>
 <div class="section" id="modelling-a-single-parameter">
-<h3>Modelling a single parameter<a class="headerlink" href="#modelling-a-single-parameter" title="Permalink to this headline">¶</a></h3>
-<p>Here we show show fitting the beta distribution works for the <span class="math notranslate nohighlight">\(\beta_P\)</span> parameter. The plot shows the fitted distribution in orange against the real data in blue.</p>
+<h2>Modelling a single parameter<a class="headerlink" href="#modelling-a-single-parameter" title="Permalink to this headline">¶</a></h2>
+<p>Here we show show fitting the normal distribution works for the <span class="math notranslate nohighlight">\(\beta_P\)</span> parameter. The plot shows the fitted distribution in orange against the real data in blue.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;BetaP&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;alpha:&quot;</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;beta:&quot;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;location:&quot;</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;scale:&quot;</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;BetaP&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mean:&quot;</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;std:&quot;</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>alpha: 68.88143534616461
-beta: 877.7287713924625
-location: -46.975479728775724
-scale: 645.7067406640599
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mean: 0.008024174333333326
+std: 5.455980769684062
 </pre></div>
 </div>
 </div>
@@ -270,7 +292,7 @@ scale: 645.7067406640599
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="n">loc</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;BetaP&quot;</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
@@ -282,42 +304,50 @@ scale: 645.7067406640599
 <img alt="_images/synthetic_data_7_0.png" src="_images/synthetic_data_7_0.png" />
 </div>
 </div>
-</div>
 <div class="section" id="applying-to-all-parameters">
 <h3>Applying to all parameters<a class="headerlink" href="#applying-to-all-parameters" title="Permalink to this headline">¶</a></h3>
-<p>First we define a function to fit the beta distribution to a single column.</p>
+<p>First we define functions to fit each of the model parameters to their distributions.</p>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_beta</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span>
-        <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span>
-        <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fit_norm</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+    <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="n">loc</span><span class="p">,</span>
         <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="n">scale</span>
-        <span class="p">})</span>
+    <span class="p">}</span>
 
-<span class="n">fit_beta</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;BetaP&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">fit_beta</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">floc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fscale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span>
+        <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span>
+        <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">fit_gamma</span><span class="p">(</span><span class="n">s</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">floc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span>
+        <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="n">scale</span>
+        <span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">fit_all_params</span><span class="p">(</span><span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;A+&quot;</span><span class="p">:</span> <span class="n">fit_beta</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;A+&quot;</span><span class="p">]),</span>
+        <span class="s2">&quot;A-&quot;</span><span class="p">:</span> <span class="n">fit_beta</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;A-&quot;</span><span class="p">]),</span>
+        <span class="s2">&quot;K&quot;</span><span class="p">:</span> <span class="n">fit_gamma</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;K&quot;</span><span class="p">]),</span>
+        <span class="s2">&quot;BetaF&quot;</span><span class="p">:</span> <span class="n">fit_norm</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;BetaF&quot;</span><span class="p">]),</span>
+        <span class="s2">&quot;BetaP&quot;</span><span class="p">:</span> <span class="n">fit_norm</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;BetaP&quot;</span><span class="p">]),</span>
+    <span class="p">}</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>a         68.881435
-b        877.728771
-loc      -46.975480
-scale    645.706741
-dtype: float64
-</pre></div>
 </div>
-</div>
-</div>
-<p>Then we can apply this across all of our parameters to get model each one. We can see the flexibility of the beta distribution here as it can fit well to each parameter.</p>
-<div class="cell docutils container">
+<p>Then we can apply this across all of our parameters to get model each one.</p>
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-stdout --no-display
-
-<span class="n">beta_params</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fit_beta</span><span class="p">)</span>
-<span class="n">beta_params</span>
+<span class="n">dist_params</span> <span class="o">=</span> <span class="n">fit_all_params</span><span class="p">(</span><span class="n">df_orl</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dist_params</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -350,35 +380,35 @@ dtype: float64
   <tbody>
     <tr>
       <th>a</th>
-      <td>1.741863e+00</td>
-      <td>1.277197</td>
-      <td>1.159286</td>
-      <td>1.534507e+07</td>
-      <td>68.881435</td>
+      <td>1.706595</td>
+      <td>2.712327</td>
+      <td>1.901708</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>b</th>
-      <td>3.585195e+07</td>
-      <td>14.350636</td>
-      <td>2.058774</td>
-      <td>2.376500e+02</td>
-      <td>877.728771</td>
+      <td>4.393497</td>
+      <td>30.392386</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>loc</th>
-      <td>3.934748e-02</td>
-      <td>0.020270</td>
-      <td>0.010321</td>
-      <td>-1.091407e+06</td>
-      <td>-46.975480</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.635854</td>
+      <td>0.008024</td>
     </tr>
     <tr>
       <th>scale</th>
-      <td>4.743963e+06</td>
-      <td>0.751762</td>
-      <td>2.299712</td>
-      <td>1.091425e+06</td>
-      <td>645.706741</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.434961</td>
+      <td>1.096704</td>
+      <td>5.455981</td>
     </tr>
   </tbody>
 </table>
@@ -388,20 +418,25 @@ dtype: float64
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">beta_params</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">model_param</span><span class="p">,</span> <span class="n">d_params</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dist_params</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
     <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-    <span class="n">b_params</span> <span class="o">=</span> <span class="n">beta_params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
-
-    <span class="c1"># Generate points to draw beta</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df_orl</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">],</span> <span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">])</span>
-
+    
+    <span class="c1"># Generate points to draw distribution</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="n">model_param</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">df_orl</span><span class="p">[</span><span class="n">model_param</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">model_param</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">d_params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">model_param</span> <span class="o">==</span> <span class="s2">&quot;K&quot;</span><span class="p">:</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">d_params</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">model_param</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">d_params</span><span class="p">)</span>
+        
     <span class="c1"># Draw plots</span>
-    <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="n">param</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="n">model_param</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
     <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     
     <span class="c1"># Formatting</span>
-    <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">model_param</span><span class="p">)</span>
+
     
 <span class="c1"># Hide unused plot</span>
 <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
@@ -417,16 +452,21 @@ dtype: float64
 </div>
 <div class="section" id="generating-new-data">
 <h3>Generating new data<a class="headerlink" href="#generating-new-data" title="Permalink to this headline">¶</a></h3>
-<p>By modelling these parameters, we can create new data by sampling from their distributions. The generated parameters could then be used to create an ORL model which represents a new person.<br />
-For now we assume that each parameter is independent, though this may not be the case in reality.<br />
-Here we generate 5000 fake data points based on the entire dataset. You can see that the new data is very similar to the real data.</p>
+<p>By modelling these parameters, we can create new data by sampling from their distributions. The generated parameters could then be used to create ORL models, each representing a synthetic person.<br />
+For now we assume that each parameter is <strong>independent</strong>, though this may not be the case in reality.
+Here we generate 5000 fake data points based on the entire dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">synth_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-<span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">beta_params</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-    <span class="n">b_params</span> <span class="o">=</span> <span class="n">beta_params</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
-    <span class="n">sample</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">],</span> <span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">],</span> <span class="n">size</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
-    <span class="n">synth_data</span><span class="p">[</span><span class="n">param</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span>
+<span class="k">for</span> <span class="n">model_param</span><span class="p">,</span> <span class="n">d_params</span> <span class="ow">in</span> <span class="n">dist_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">model_param</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">):</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">**</span><span class="n">d_params</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">model_param</span> <span class="o">==</span> <span class="s2">&quot;K&quot;</span><span class="p">:</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">**</span><span class="n">d_params</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">model_param</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">):</span>
+        <span class="n">sample</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">**</span><span class="n">d_params</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">5000</span><span class="p">)</span>
+        
+    <span class="n">synth_data</span><span class="p">[</span><span class="n">model_param</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span>
     
 <span class="n">synth_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -461,43 +501,43 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.176203</td>
-      <td>0.039892</td>
-      <td>1.254919</td>
-      <td>3.043307</td>
-      <td>-3.805704</td>
+      <td>0.574094</td>
+      <td>0.031124</td>
+      <td>0.300517</td>
+      <td>3.257334</td>
+      <td>5.980216</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.465209</td>
-      <td>0.035922</td>
-      <td>0.520399</td>
-      <td>4.437186</td>
-      <td>6.245248</td>
+      <td>0.074342</td>
+      <td>0.145210</td>
+      <td>0.258863</td>
+      <td>3.052811</td>
+      <td>-9.130873</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.205180</td>
-      <td>0.049590</td>
-      <td>0.553471</td>
-      <td>1.093211</td>
-      <td>-0.255820</td>
+      <td>0.134787</td>
+      <td>0.099285</td>
+      <td>2.055845</td>
+      <td>0.355421</td>
+      <td>0.452551</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.160102</td>
-      <td>0.063360</td>
-      <td>1.703708</td>
-      <td>-0.209519</td>
-      <td>-4.496044</td>
+      <td>0.195762</td>
+      <td>0.139957</td>
+      <td>0.960942</td>
+      <td>2.175460</td>
+      <td>-3.998895</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.081312</td>
-      <td>0.076992</td>
-      <td>0.442301</td>
-      <td>-0.754334</td>
-      <td>-2.519056</td>
+      <td>0.022377</td>
+      <td>0.041567</td>
+      <td>0.945053</td>
+      <td>2.423405</td>
+      <td>0.100068</td>
     </tr>
   </tbody>
 </table>
@@ -515,18 +555,19 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="modelling-the-smaller-groups">
-<h3>Modelling the smaller groups<a class="headerlink" href="#modelling-the-smaller-groups" title="Permalink to this headline">¶</a></h3>
-<p>As we saw when we explored the data and during clustering, the young and old groups differ quite a bit, and the old group could be clustered into two distinct sets. We can apply the same methods to model each of these groups and generate new data for them. Here we split the old group into “Type A” and “Type B”.</p>
+<h2>Modelling the smaller groups<a class="headerlink" href="#modelling-the-smaller-groups" title="Permalink to this headline">¶</a></h2>
+<p>As we saw when we explored the data and during clustering, the young and old groups differ quite a bit, so we can’t really model the entire dataset with a single distribution for each parameter. We can apply the same methods to model each of these groups and generate new data for them. Here we split the old group into “Type A” (low BetaP values) and “Type B” (high BetaP values).</p>
 <div class="section" id="young">
-<h4>Young<a class="headerlink" href="#young" title="Permalink to this headline">¶</a></h4>
+<h3>Young<a class="headerlink" href="#young" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-stdout --no-display
 
 <span class="n">df_orl_young</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;young&quot;</span><span class="p">]</span>
-<span class="n">beta_params_young</span> <span class="o">=</span> <span class="n">df_orl_young</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fit_beta</span><span class="p">)</span>
-<span class="n">beta_params_young</span>
+<span class="n">dist_params_young</span> <span class="o">=</span> <span class="n">fit_all_params</span><span class="p">(</span><span class="n">df_orl_young</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dist_params_young</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -559,35 +600,35 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
   <tbody>
     <tr>
       <th>a</th>
-      <td>3.107816</td>
-      <td>0.915963</td>
-      <td>1.666190</td>
-      <td>44457.188518</td>
-      <td>2913.598741</td>
+      <td>3.655719</td>
+      <td>2.989598</td>
+      <td>3.477007</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>b</th>
-      <td>76.070238</td>
-      <td>2.257807</td>
-      <td>2.562542</td>
-      <td>308.849573</td>
-      <td>578148.025209</td>
+      <td>14.445001</td>
+      <td>36.231395</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>loc</th>
-      <td>0.028411</td>
-      <td>0.021939</td>
-      <td>0.054638</td>
-      <td>-2736.611710</td>
-      <td>-166.173438</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.552756</td>
+      <td>-0.767603</td>
     </tr>
     <tr>
       <th>scale</th>
-      <td>4.404843</td>
-      <td>0.199791</td>
-      <td>1.428159</td>
-      <td>2757.184760</td>
-      <td>32987.037332</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.177327</td>
+      <td>1.077317</td>
+      <td>3.056362</td>
     </tr>
   </tbody>
 </table>
@@ -595,14 +636,14 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
 </div>
 </div>
 <div class="section" id="old">
-<h4>Old<a class="headerlink" href="#old" title="Permalink to this headline">¶</a></h4>
+<h3>Old<a class="headerlink" href="#old" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-stdout --no-display
 
 <span class="n">df_orl_old</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;old&quot;</span><span class="p">]</span>
-<span class="n">beta_params_old</span> <span class="o">=</span> <span class="n">df_orl_old</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fit_beta</span><span class="p">)</span>
-<span class="n">beta_params_old</span>
+<span class="n">dist_params_old</span> <span class="o">=</span> <span class="n">fit_all_params</span><span class="p">(</span><span class="n">df_orl_old</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dist_params_old</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -635,35 +676,35 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
   <tbody>
     <tr>
       <th>a</th>
-      <td>0.958313</td>
-      <td>1.213712</td>
-      <td>0.774079</td>
-      <td>8.873484e+06</td>
-      <td>1.616325</td>
+      <td>1.538382</td>
+      <td>2.499188</td>
+      <td>1.502358</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>b</th>
-      <td>1.955718</td>
-      <td>11.336348</td>
-      <td>0.592393</td>
-      <td>2.703547e+02</td>
-      <td>0.912239</td>
+      <td>2.583400</td>
+      <td>25.265530</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>loc</th>
-      <td>0.057909</td>
-      <td>0.020123</td>
-      <td>-0.193459</td>
-      <td>-6.012199e+05</td>
-      <td>-17.371774</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.754565</td>
+      <td>1.116063</td>
     </tr>
     <tr>
       <th>scale</th>
-      <td>0.940770</td>
-      <td>0.719350</td>
-      <td>2.348823</td>
-      <td>6.012400e+05</td>
-      <td>29.809652</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.750838</td>
+      <td>1.113110</td>
+      <td>7.540629</td>
     </tr>
   </tbody>
 </table>
@@ -676,14 +717,15 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
 </div>
 </div>
 </div>
-<p>Type A</p>
+<div class="section" id="type-a">
+<h4>Type A<a class="headerlink" href="#type-a" title="Permalink to this headline">¶</a></h4>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-stdout --no-display
 
 <span class="n">df_orl_old_a</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;old&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;BetaP&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">beta_p_split</span><span class="p">)]</span>
-<span class="n">beta_params_old_a</span> <span class="o">=</span> <span class="n">df_orl_old_a</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fit_beta</span><span class="p">)</span>
-<span class="n">beta_params_old_a</span>
+<span class="n">dist_params_old_a</span> <span class="o">=</span> <span class="n">fit_all_params</span><span class="p">(</span><span class="n">df_orl_old_a</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dist_params_old_a</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -716,48 +758,50 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
   <tbody>
     <tr>
       <th>a</th>
-      <td>0.722214</td>
-      <td>0.865624</td>
-      <td>0.495562</td>
-      <td>43960.087950</td>
-      <td>13.236911</td>
+      <td>1.423581</td>
+      <td>2.785678</td>
+      <td>1.161286</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>b</th>
-      <td>1.272786</td>
-      <td>3.517498</td>
-      <td>0.534283</td>
-      <td>2081.818929</td>
-      <td>9.560163</td>
+      <td>2.106115</td>
+      <td>30.929010</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>loc</th>
-      <td>0.057909</td>
-      <td>0.020484</td>
-      <td>-0.192978</td>
-      <td>-931.915178</td>
-      <td>-32.536860</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2.191551</td>
+      <td>-3.315467</td>
     </tr>
     <tr>
       <th>scale</th>
-      <td>0.913321</td>
-      <td>0.300969</td>
-      <td>2.348342</td>
-      <td>978.343572</td>
-      <td>50.328865</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.785322</td>
+      <td>0.947348</td>
+      <td>5.082615</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Type B</p>
+</div>
+<div class="section" id="type-b">
+<h4>Type B<a class="headerlink" href="#type-b" title="Permalink to this headline">¶</a></h4>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span> --no-stdout --no-display
 
 <span class="n">df_orl_old_b</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;old&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;BetaP&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">beta_p_split</span><span class="p">)]</span>
-<span class="n">beta_params_old_b</span> <span class="o">=</span> <span class="n">df_orl_old_b</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">fit_beta</span><span class="p">)</span>
-<span class="n">beta_params_old_b</span>
+<span class="n">dist_params_old_b</span> <span class="o">=</span> <span class="n">fit_all_params</span><span class="p">(</span><span class="n">df_orl_old_b</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dist_params_old_b</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -790,56 +834,64 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
   <tbody>
     <tr>
       <th>a</th>
-      <td>0.699318</td>
-      <td>1.362001e+00</td>
-      <td>0.972171</td>
-      <td>0.769294</td>
-      <td>1.766948e+03</td>
+      <td>2.318003</td>
+      <td>2.263055</td>
+      <td>18.985592</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>b</th>
-      <td>0.680318</td>
-      <td>1.028942e+12</td>
-      <td>0.750829</td>
-      <td>1.052466</td>
-      <td>2.673188e+07</td>
+      <td>5.303646</td>
+      <td>19.375619</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>loc</th>
-      <td>0.017114</td>
-      <td>2.812678e-02</td>
-      <td>0.842743</td>
-      <td>-0.763200</td>
-      <td>-3.383923e+01</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.880591</td>
+      <td>9.979123</td>
     </tr>
     <tr>
       <th>scale</th>
-      <td>0.537328</td>
-      <td>5.020509e+10</td>
-      <td>1.292264</td>
-      <td>3.268634</td>
-      <td>6.629646e+05</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.082174</td>
+      <td>0.881113</td>
+      <td>1.042388</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
 </div>
+</div>
+</div>
 <div class="section" id="results">
-<h4>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h4>
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
 <div class="cell tag_hide-cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Function to draw row of plots</span>
-<span class="k">def</span> <span class="nf">draw_beta_fit</span><span class="p">(</span><span class="n">beta_params_df</span><span class="p">,</span> <span class="n">data_df</span><span class="p">,</span> <span class="n">ax_row</span><span class="p">,</span> <span class="n">y_label</span><span class="p">,</span> <span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">beta_params_df</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
-        <span class="n">b_params</span> <span class="o">=</span> <span class="n">beta_params_df</span><span class="p">[</span><span class="n">param</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">draw_dist_fit</span><span class="p">(</span><span class="n">dist_params</span><span class="p">,</span> <span class="n">data_df</span><span class="p">,</span> <span class="n">ax_row</span><span class="p">,</span> <span class="n">y_label</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">model_param</span><span class="p">,</span> <span class="n">d_params</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dist_params</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="n">row</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
     
         <span class="c1"># Generate points to draw beta</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data_df</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data_df</span><span class="p">[</span><span class="n">param</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">],</span> <span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;b&quot;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">b_params</span><span class="p">[</span><span class="s2">&quot;scale&quot;</span><span class="p">])</span>
-
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data_df</span><span class="p">[</span><span class="n">model_param</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data_df</span><span class="p">[</span><span class="n">model_param</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">model_param</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">d_params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model_param</span> <span class="o">==</span> <span class="s2">&quot;K&quot;</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">d_params</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model_param</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">d_params</span><span class="p">)</span>
+        
+        
         <span class="c1"># Draw plots</span>
-        <span class="n">ax_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data_df</span><span class="p">[</span><span class="n">param</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
+        <span class="n">ax_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data_df</span><span class="p">[</span><span class="n">model_param</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
         <span class="n">ax_row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
         
     <span class="n">ax_row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">y_label</span><span class="p">)</span>
@@ -852,13 +904,13 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
 <span class="c1"># Plots</span>
-<span class="n">draw_beta_fit</span><span class="p">(</span><span class="n">beta_params_young</span><span class="p">,</span> <span class="n">df_orl_young</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Young&quot;</span><span class="p">)</span>
-<span class="n">draw_beta_fit</span><span class="p">(</span><span class="n">beta_params_old</span><span class="p">,</span> <span class="n">df_orl_old</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;Old&quot;</span><span class="p">)</span>
-<span class="n">draw_beta_fit</span><span class="p">(</span><span class="n">beta_params_old_a</span><span class="p">,</span> <span class="n">df_orl_old_a</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;Old - Type A&quot;</span><span class="p">)</span>
-<span class="n">draw_beta_fit</span><span class="p">(</span><span class="n">beta_params_old_b</span><span class="p">,</span> <span class="n">df_orl_old_b</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;Old - Type B&quot;</span><span class="p">)</span>
+<span class="n">draw_dist_fit</span><span class="p">(</span><span class="n">dist_params_young</span><span class="p">,</span> <span class="n">df_orl_young</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;Young&quot;</span><span class="p">)</span>
+<span class="n">draw_dist_fit</span><span class="p">(</span><span class="n">dist_params_old</span><span class="p">,</span> <span class="n">df_orl_old</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;Old&quot;</span><span class="p">)</span>
+<span class="n">draw_dist_fit</span><span class="p">(</span><span class="n">dist_params_old_a</span><span class="p">,</span> <span class="n">df_orl_old_a</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;Old - Type A&quot;</span><span class="p">)</span>
+<span class="n">draw_dist_fit</span><span class="p">(</span><span class="n">dist_params_old_b</span><span class="p">,</span> <span class="n">df_orl_old_b</span><span class="p">,</span> <span class="n">ax</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="s2">&quot;Old - Type B&quot;</span><span class="p">)</span>
 
 <span class="c1"># Param titles</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">beta_params_young</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dist_params_old_b</span><span class="p">):</span>
     <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
     
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -870,9 +922,184 @@ Here we generate 5000 fake data points based on the entire dataset. You can see 
 </div>
 </div>
 <p>This lets us compare the parameters across each of the different groups. We can see that the A+ and A- parameters are fairly similar for all of the groups, spread out with a slight skew to the left.<br />
-The K parameter shows a difference between young and old, concentrated centrally versus much more uniform.<br />
-The <span class="math notranslate nohighlight">\(\beta_F\)</span> parameter is normally distributed for both the young and old (type A) groups, however with the type B group we see a degredation in the normal shape, being much closer to a uniform distribution.
-Finally the <span class="math notranslate nohighlight">\(\beta_P\)</span> parameter clearly shows the three distinct normal distributions. Notably the type B group has much higher values than both the young and type A groups which have similar distributions. In <a class="reference external" href="http://www.labsi.org/cognitive/Becharaetal1997.pdf">[1]</a>, they note that participants with damage to their prefrontal cortex continue to choose bad decks even in the face of punishing outcomes, so this high value of perserverance could be explained by this.</p>
+The K parameter shows a difference between young and old, concentrated centrally versus much more uniform. There is a large variety in the distributions across groups, so the gamma distribution struggles to fit these well. More data may be needed in this case to start being able to see the underlying distributions.<br />
+The <span class="math notranslate nohighlight">\(\beta_F\)</span> parameter is normally distributed for both the young and old (type A) groups, however with the type B group we see a degredation in the normal shape, being much closer to a uniform distribution.<br />
+Finally the <span class="math notranslate nohighlight">\(\beta_P\)</span> parameter clearly shows the three distinct normal distributions. Notably the type B group has much higher values than both the young and type A groups which have similar distributions. In <a class="reference external" href="http://www.labsi.org/cognitive/Becharaetal1997.pdf">Bechara, et al. (1997)</a>, they note that participants with damage to their prefrontal cortex continue to choose bad decks even in the face of punishing outcomes, so the high value of perserverance for this group could be explained by this.</p>
+<div class="section" id="putting-the-groups-back-together">
+<h3>Putting the groups back together<a class="headerlink" href="#putting-the-groups-back-together" title="Permalink to this headline">¶</a></h3>
+<p>Finally we can put all of this together to model the entire dataset. We generate new samples for each group in proportion to their representation in the entire dataset.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;young&quot;</span><span class="p">,</span> <span class="s2">&quot;old - type A&quot;</span><span class="p">,</span> <span class="s2">&quot;old - type B&quot;</span><span class="p">]</span>
+<span class="n">dist_params_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">dist_params_young</span><span class="p">,</span> <span class="n">dist_params_old_a</span><span class="p">,</span> <span class="n">dist_params_old_b</span><span class="p">]</span>
+<span class="n">group_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="p">[</span><span class="n">df_orl_young</span><span class="p">,</span> <span class="n">df_orl_old_a</span><span class="p">,</span> <span class="n">df_orl_old_b</span><span class="p">]]</span>
+
+<span class="n">synth_dataframes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">group</span><span class="p">,</span> <span class="n">dist_params</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="n">dist_params_list</span><span class="p">,</span> <span class="n">group_sizes</span><span class="p">):</span>
+    <span class="n">synth_single</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">model_param</span><span class="p">,</span> <span class="n">d_param</span> <span class="ow">in</span> <span class="n">dist_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Sample data from distribution</span>
+        <span class="k">if</span> <span class="n">model_param</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">):</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">**</span><span class="n">d_param</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model_param</span> <span class="o">==</span> <span class="s2">&quot;K&quot;</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">gamma</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">**</span><span class="n">d_param</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">model_param</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">):</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="o">**</span><span class="n">d_param</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+        
+        <span class="n">synth_single</span><span class="p">[</span><span class="n">model_param</span><span class="p">]</span> <span class="o">=</span> <span class="n">sample</span>
+        
+    <span class="n">synth_single</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span>
+    <span class="n">synth_dataframes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">synth_single</span><span class="p">)</span>
+        
+<span class="n">synth_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">synth_dataframes</span><span class="p">)</span>
+<span class="n">synth_df</span><span class="p">[</span><span class="s2">&quot;group_label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">synth_df</span><span class="p">[</span><span class="s2">&quot;group&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span>  <span class="c1"># Add group label</span>
+<span class="n">synth_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A+</th>
+      <th>A-</th>
+      <th>K</th>
+      <th>BetaF</th>
+      <th>BetaP</th>
+      <th>group</th>
+      <th>group_label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>3930</th>
+      <td>0.492407</td>
+      <td>0.047245</td>
+      <td>2.498637</td>
+      <td>2.795654</td>
+      <td>-10.344888</td>
+      <td>old - type A</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>6409</th>
+      <td>0.404574</td>
+      <td>0.186659</td>
+      <td>0.306398</td>
+      <td>2.496660</td>
+      <td>3.049128</td>
+      <td>young</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4854</th>
+      <td>0.070355</td>
+      <td>0.054698</td>
+      <td>0.693009</td>
+      <td>2.515573</td>
+      <td>0.764829</td>
+      <td>young</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1537</th>
+      <td>0.070397</td>
+      <td>0.217467</td>
+      <td>1.302696</td>
+      <td>2.144539</td>
+      <td>10.051517</td>
+      <td>old - type B</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1061</th>
+      <td>0.339078</td>
+      <td>0.085428</td>
+      <td>0.329380</td>
+      <td>1.196937</td>
+      <td>0.480336</td>
+      <td>young</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1669</th>
+      <td>0.368196</td>
+      <td>0.067196</td>
+      <td>1.225827</td>
+      <td>1.474769</td>
+      <td>2.245432</td>
+      <td>young</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1237</th>
+      <td>0.262965</td>
+      <td>0.043771</td>
+      <td>1.343233</td>
+      <td>-1.508035</td>
+      <td>1.039165</td>
+      <td>young</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>6855</th>
+      <td>0.114716</td>
+      <td>0.025715</td>
+      <td>0.517140</td>
+      <td>3.408465</td>
+      <td>-0.031315</td>
+      <td>young</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1293</th>
+      <td>0.111152</td>
+      <td>0.096714</td>
+      <td>1.367111</td>
+      <td>1.193835</td>
+      <td>11.473153</td>
+      <td>old - type B</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2375</th>
+      <td>0.347549</td>
+      <td>0.151705</td>
+      <td>0.162484</td>
+      <td>1.213896</td>
+      <td>6.768393</td>
+      <td>young</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">synth_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&quot;group_label&quot;</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">hist_kwds</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">synth_df</span><span class="p">[</span><span class="s2">&quot;group_label&quot;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/synthetic_data_35_0.png" src="_images/synthetic_data_35_0.png" />
+</div>
 </div>
 </div>
 </div>
