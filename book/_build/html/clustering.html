@@ -239,14 +239,53 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#elbow-method">
-     Elbow method
+    <a class="reference internal nav-link" href="#elbow-method-k-means">
+     Elbow method (K-Means)
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#silhouette-analysis">
      Silhouette Analysis
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id1">
+       K-Means
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Hierarchical Agglomerative
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-clusters-to-classify-age">
+     Using clusters to classify age
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#k-means-k-2">
+       K-Means (k=2)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#k-means-k-3">
+       K-Means (k=3)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hierarchical-agglomerative-k-2">
+       Hierarchical Agglomerative (k=2)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#hierarchical-agglomerative-k-3">
+       Hierarchical Agglomerative (k=3)
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -367,8 +406,7 @@
 <p>Here we are investigating the clustering between two of the paramaters of the model. BetaF relates to the person’s outcome frequency. Furthermore, when this parameter is less than zero it means the person prefers decks of low win frequency, and a high BetaF score means that they prefer decks with a high win frequency. BetaP is the parameter which accounts for the participant’s perseverence in choosing decks. Values less than zero indicate a tendency to switch between decks and values greater than zero means the participant likes to stick with the same deck more often.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl_betas</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;subjID_label&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span>
-<span class="n">kmeans_betas</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl_betas</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans_betas</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
 <span class="n">centroids_betas</span> <span class="o">=</span> <span class="n">kmeans_betas</span><span class="o">.</span><span class="n">cluster_centers_</span>
 </pre></div>
 </div>
@@ -376,7 +414,7 @@
 </div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaF&#39;</span><span class="p">],</span> <span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaP&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span> <span class="n">kmeans_betas</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s2">&quot;Set1&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s1">&#39;BetaF&#39;</span><span class="p">],</span> <span class="n">df_orl</span><span class="p">[</span><span class="s1">&#39;BetaP&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span> <span class="n">kmeans_betas</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s2">&quot;Set1&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">centroids_betas</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">centroids_betas</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;BetaF&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;BetaP&#39;</span><span class="p">)</span>
@@ -391,7 +429,7 @@
 <p>There are clearly three defined clusters when plotting these two parameters with the data. Let’s compare this with the plot showing young vs old participants.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaF&#39;</span><span class="p">],</span> <span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;BetaP&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">df_orl_betas</span><span class="p">[</span><span class="s1">&#39;subjID_label&#39;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1_r&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s1">&#39;BetaF&#39;</span><span class="p">],</span> <span class="n">df_orl</span><span class="p">[</span><span class="s1">&#39;BetaP&#39;</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">df_orl</span><span class="p">[</span><span class="s1">&#39;subjID_label&#39;</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1_r&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;BetaF&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;BetaP&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -403,15 +441,9 @@
 <img alt="_images/clustering_8_0.png" src="_images/clustering_8_0.png" />
 </div>
 </div>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#This next section could go under different headings and could go in Findings/Results/Conclusions etc. Inserting here now as</span>
-<span class="c1">#it is easy to see with plots just above it</span>
-<span class="c1">#Wording could be improved but will be refined later</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>#This next section could go under different headings and could go in Findings/Results/Conclusions etc. Inserting here now as
+#it is easy to see with plots just above it
+#Wording could be improved but will be refined later</p>
 </div>
 <div class="section" id="betap-cluster-findings">
 <h3>BetaP Cluster Findings<a class="headerlink" href="#betap-cluster-findings" title="Permalink to this headline">¶</a></h3>
@@ -596,9 +628,9 @@
 </div>
 <div class="section" id="evaluating-the-clusters">
 <h2>Evaluating the clusters<a class="headerlink" href="#evaluating-the-clusters" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="elbow-method">
-<h3>Elbow method<a class="headerlink" href="#elbow-method" title="Permalink to this headline">¶</a></h3>
-<p>The elbow method shows that for these parameters the optimal number of clusters is 2/3</p>
+<div class="section" id="elbow-method-k-means">
+<h3>Elbow method (K-Means)<a class="headerlink" href="#elbow-method-k-means" title="Permalink to this headline">¶</a></h3>
+<p>The elbow method shows that for these parameters the optimal number of clusters for K-means is 2/3.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span>
@@ -625,7 +657,143 @@
 </div>
 <div class="section" id="silhouette-analysis">
 <h3>Silhouette Analysis<a class="headerlink" href="#silhouette-analysis" title="Permalink to this headline">¶</a></h3>
-<p>TODO</p>
+<p>todo: explanation of silhouette analysis</p>
+<div class="section" id="id1">
+<h4>K-Means<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>For K-Means clustering, we see peaks in silhouette score at 2 and 4 clusters.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span>
+<span class="n">silhouettes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">K</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K</span><span class="p">:</span>
+    <span class="n">kmeanModel</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">kmeanModel</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+    <span class="n">silhouettes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">kmeanModel</span><span class="o">.</span><span class="n">labels_</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">silhouettes</span><span class="p">,</span> <span class="s1">&#39;bx-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Silhouette Score&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Silhouette scores for K-Means Clustering&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_39_0.png" src="_images/clustering_39_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h4>Hierarchical Agglomerative<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>For Hierarchical Agglomerative clustering, we see a single peak in silhouette score at 2 clusters. This is slightly higher than k-means at two clusters, but lower for all other number of clusters.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]]</span>
+<span class="n">silhouettes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">K</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K</span><span class="p">:</span>
+    <span class="n">kmeanModel</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">kmeanModel</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+    <span class="n">silhouettes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">silhouette_score</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">kmeanModel</span><span class="o">.</span><span class="n">labels_</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span> <span class="n">silhouettes</span><span class="p">,</span> <span class="s1">&#39;bx-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Silhouette Score&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Silhouette scores for Hierarchical Agglomerative Clustering&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_41_0.png" src="_images/clustering_41_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="using-clusters-to-classify-age">
+<h3>Using clusters to classify age<a class="headerlink" href="#using-clusters-to-classify-age" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">confusion_matrix</span><span class="p">(</span><span class="n">labels_a</span><span class="p">,</span> <span class="n">labels_b</span><span class="p">):</span>
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">max</span><span class="p">(</span><span class="n">labels_a</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">labels_b</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">at</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="p">(</span><span class="n">labels_a</span><span class="p">,</span> <span class="n">labels_b</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="k-means-k-2">
+<h4>K-Means (k=2)<a class="headerlink" href="#k-means-k-2" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="k-means-k-3">
+<h4>K-Means (k=3)<a class="headerlink" href="#k-means-k-3" title="Permalink to this headline">¶</a></h4>
+<p>With three clusters, K-means successfully clusters the majority of the young participants in a single group. We also see however that the old group is distributed across all three clusters. This lines up with what we see in the data, the parameters for the old participants are much more spread out.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">kmeans_betas</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="n">cm</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Cluster&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Age&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_46_0.png" src="_images/clustering_46_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="hierarchical-agglomerative-k-2">
+<h4>Hierarchical Agglomerative (k=2)<a class="headerlink" href="#hierarchical-agglomerative-k-2" title="Permalink to this headline">¶</a></h4>
+<p>With just 2 clusters, the separation between young and old is not very good. While most of the young datapoints are covered by cluster 0, the old datapoints are split between the two.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">agg_cluster_all</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="n">cm</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Cluster&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Age&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_48_0.png" src="_images/clustering_48_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="hierarchical-agglomerative-k-3">
+<h4>Hierarchical Agglomerative (k=3)<a class="headerlink" href="#hierarchical-agglomerative-k-3" title="Permalink to this headline">¶</a></h4>
+<p>With three clusters it is somewhat improved. Cluster 2 contains mostly young, and cluster 1 has mostly old. We also see a cluster where the two are evenly split, which could indicate that there is a sizeable overlap between the two groups.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">agg_cluster3</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="n">cm</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Cluster&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Age&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_50_0.png" src="_images/clustering_50_0.png" />
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
