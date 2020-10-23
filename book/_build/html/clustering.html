@@ -103,6 +103,11 @@
    Generating Synthetic Data
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="conclusion.html">
+   Conclusion
+  </a>
+ </li>
 </ul>
 
 </nav>
@@ -448,18 +453,6 @@
 <div class="section" id="betap-cluster-findings">
 <h3>BetaP Cluster Findings<a class="headerlink" href="#betap-cluster-findings" title="Permalink to this headline">¶</a></h3>
 <p>This second plot helps to understand the clusters in the first graph more clearly now. The clusters are primarily based on three different groups of participants and their balues for BetaP, the perseverence parameter. The old people are mainly split into two clusters: those with a high value for perseverence and those with a low value for perseverence. The middle cluster consists mainly of young people, whose values for perseverence are more neutral, lying between +-5 in BetaP.</p>
-<div class="cell tag_hide-cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl</span><span class="p">[</span><span class="n">df_orl</span><span class="o">.</span><span class="n">BetaF</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>        
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>143
-</pre></div>
-</div>
-</div>
-</div>
 </div>
 <div class="section" id="betak-cluster-findings">
 <h3>BetaK Cluster Findings<a class="headerlink" href="#betak-cluster-findings" title="Permalink to this headline">¶</a></h3>
@@ -470,38 +463,32 @@
 <h2>Hierarchical Agglomerative<a class="headerlink" href="#hierarchical-agglomerative" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="cluster-based-on-the-a-and-a-columns-only">
 <h3>Cluster based on the A+ and A- columns only<a class="headerlink" href="#cluster-based-on-the-a-and-a-columns-only" title="Permalink to this headline">¶</a></h3>
-<p>Fit the clusters and show labels assigned to each data point</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_cluster_A</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">]])</span>
-<span class="n">agg_cluster_A</span><span class="o">.</span><span class="n">labels_</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-       0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0,
-       0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0])
-</pre></div>
-</div>
-</div>
-</div>
+<p>Using just the two A parameters, we see two clusters clearly split between high and low values for A+ and a mix across A-.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_A</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_cluster_A</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">]])</span>
+<span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_A</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_18_0.png" src="_images/clustering_18_0.png" />
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="n">f4ef16cced7f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">agg_cluster_A</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">]])</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_A</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="ne">AttributeError</span>: module &#39;matplotlib.pyplot&#39; has no attribute &#39;set_xlabel&#39;
+</pre></div>
+</div>
+<img alt="_images/clustering_16_1.png" src="_images/clustering_16_1.png" />
 </div>
 </div>
-<p>Show how the entire dataset is clustered with the two parameters</p>
+<p>These two clusters do not however show much separation for the other parameters. Looking at the 9 boxes in the lower right of the plot, we see that the two clusters are almost completely overlapping.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">hist_kwds</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_A</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
@@ -510,47 +497,47 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_20_0.png" src="_images/clustering_20_0.png" />
+<img alt="_images/clustering_18_0.png" src="_images/clustering_18_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="cluster-with-all-parameters">
 <h3>Cluster with all parameters<a class="headerlink" href="#cluster-with-all-parameters" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_cluster_all</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
-<span class="n">agg_cluster_all</span><span class="o">.</span><span class="n">labels_</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0,
-       0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0,
-       0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0,
-       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-       1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-       0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0,
-       0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])
-</pre></div>
-</div>
-</div>
-</div>
-<p>Show how A+ and A- are clustered based on all params</p>
+<p>When we cluster using all of the available parameters, there is initially no clear separation when comparing the previous A+ and A- parameters.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_all</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_cluster_all</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
+<span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_all</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_24_0.png" src="_images/clustering_24_0.png" />
+<img alt="_images/clustering_21_0.png" src="_images/clustering_21_0.png" />
 </div>
 </div>
-<p>Show how entire dataset is clustered based on all params</p>
+<p>However when we compare all parameters, we see clear separation across a number of parameters in particular <span class="math notranslate nohighlight">\(\beta_P\)</span>. There is also some level of distiction between the clusters for K and <span class="math notranslate nohighlight">\(\beta_F\)</span> parameters.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">hist_kwds</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_all</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_23_0.png" src="_images/clustering_23_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="clustering-the-old-group">
+<h3>Clustering the old group<a class="headerlink" href="#clustering-the-old-group" title="Permalink to this headline">¶</a></h3>
+<p>Clustering the old group alone, there is a clear separation based on the BetaP parameter dividing the two distributions we identified during data exploration. The other parameters seem to be well mixed between the clusters, meaning there’s no significant difference to cluster based on.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl_old</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;old&quot;</span><span class="p">]</span>
+<span class="n">agg_cluster_old</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl_old</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">df_orl_old</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">hist_kwds</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_old</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -560,67 +547,18 @@
 </div>
 </div>
 </div>
-<div class="section" id="clustering-the-old-group">
-<h3>Clustering the old group<a class="headerlink" href="#clustering-the-old-group" title="Permalink to this headline">¶</a></h3>
-<p>Clustering on the old group, there is a clear separation based on the BetaP parameter. The other parameters seem to be well mixed between the clusters, meaning there’s no significant difference to cluster based on.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_orl_old</span> <span class="o">=</span> <span class="n">df_orl</span><span class="p">[</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;old&quot;</span><span class="p">]</span>
-<span class="n">agg_cluster_old</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl_old</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
-<span class="n">agg_cluster_old</span><span class="o">.</span><span class="n">labels_</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0,
-       0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0,
-       0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0])
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">df_orl_old</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">hist_kwds</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">25</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_old</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/clustering_30_0.png" src="_images/clustering_30_0.png" />
-</div>
-</div>
-</div>
 <div class="section" id="using-more-than-two-clusters">
 <h3>Using more than two clusters<a class="headerlink" href="#using-more-than-two-clusters" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_cluster3</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
-<span class="n">agg_cluster3</span><span class="o">.</span><span class="n">labels_</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 2, 1, 1, 1, 0, 2, 0, 0,
-       0, 1, 1, 1, 0, 2, 2, 1, 1, 2, 2, 1, 2, 2, 2, 0, 0, 1, 1, 2, 1, 0,
-       2, 0, 2, 2, 0, 0, 1, 2, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 2, 0, 2,
-       2, 0, 0, 0, 2, 2, 2, 2, 2, 0, 2, 1, 2, 2, 2, 2, 2, 0, 1, 2, 0, 2,
-       1, 1, 2, 2, 0, 2, 2, 1, 2, 2, 2, 0, 2, 0, 0, 0, 2, 2, 0, 2, 0, 2,
-       0, 2, 0, 1, 0, 2, 2, 2, 2, 2, 2, 2, 2, 1, 0, 2, 0, 2, 2, 1, 2, 2,
-       2, 2, 2, 1, 0, 1, 1, 0, 2, 2, 2, 2, 2, 2, 2, 0, 2, 2, 2, 0, 1])
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">hist_kwds</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster3</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_cluster3</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">scatter_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">hist_kwds</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster3</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_33_0.png" src="_images/clustering_33_0.png" />
+<img alt="_images/clustering_28_0.png" src="_images/clustering_28_0.png" />
 </div>
 </div>
 <p>There seems to be much better clusters for the BetaF &amp; BetaP parameters.</p>
@@ -630,6 +568,10 @@
 <h2>Evaluating the clusters<a class="headerlink" href="#evaluating-the-clusters" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="elbow-method-k-means">
 <h3>Elbow method (K-Means)<a class="headerlink" href="#elbow-method-k-means" title="Permalink to this headline">¶</a></h3>
+<p>The first cluster evaluation method is K-means. Here, we plot the variation against the number of clusters in the data, and picking the “elbow” of the curve as the number of clusters to use for the analysis.
+The principle for calculating the distortion for each number of cluster stems back to <strong>Sum of Squared Error</strong> (SSE) between points and their clusters.</p>
+<div class="math notranslate nohighlight">
+\[SSE =\sum_{i=1}^{n} {(y_i - ŷ_i)^2}\]</div>
 <p>The elbow method shows that for these parameters the optimal number of clusters for K-means is 2/3.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -651,13 +593,20 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_37_0.png" src="_images/clustering_37_0.png" />
+<img alt="_images/clustering_33_0.png" src="_images/clustering_33_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="silhouette-analysis">
 <h3>Silhouette Analysis<a class="headerlink" href="#silhouette-analysis" title="Permalink to this headline">¶</a></h3>
-<p>todo: explanation of silhouette analysis</p>
+<p>Silhouette analysis is another method of checking cluster validation. It does so by checking how similar each point is to its own cluster compared to other clusters. Again, it does so through Euclidean distance. The silhouette metric ranges from -1 to +1, where a high value indicates an object has been matched well to its own cluster and is poorly matched with neighbouring clusters.</p>
+<p>Silhouette coefficient exhibits a peak characteristic as compared to the gentle bend in the elbow method. This is easier to visualize and reason with. In the above graph, you could understand that the optimal number of clusters is either 2 or 3. The peak in the silhouette coefficient graph will eliminate this uncertainty.</p>
+<p>The equation for this coefficient is below</p>
+<div class="math notranslate nohighlight">
+\[a(i) = \frac{1}{|C_i-1|}  \sum_{j \epsilon C_i, i≠j}{d(i, j)} \]</div>
+<p>where $<span class="math notranslate nohighlight">\(a(i)\)</span>$ is the measure of how well a point is assigned to its cluster. The smaller the value, the better assigned it is to its cluster.</p>
+<div class="math notranslate nohighlight">
+\[{d(i, j)}$$ is the distance between points i and j within cluster $$C_i\]</div>
 <div class="section" id="id1">
 <h4>K-Means<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <p>For K-Means clustering, we see peaks in silhouette score at 2 and 4 clusters.</p>
@@ -681,7 +630,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_39_0.png" src="_images/clustering_39_0.png" />
+<img alt="_images/clustering_36_0.png" src="_images/clustering_36_0.png" />
 </div>
 </div>
 </div>
@@ -708,7 +657,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_41_0.png" src="_images/clustering_41_0.png" />
+<img alt="_images/clustering_38_0.png" src="_images/clustering_38_0.png" />
 </div>
 </div>
 </div>
@@ -746,7 +695,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_46_0.png" src="_images/clustering_46_0.png" />
+<img alt="_images/clustering_43_0.png" src="_images/clustering_43_0.png" />
 </div>
 </div>
 </div>
@@ -768,7 +717,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_48_0.png" src="_images/clustering_48_0.png" />
+<img alt="_images/clustering_45_0.png" src="_images/clustering_45_0.png" />
 </div>
 </div>
 </div>
@@ -790,7 +739,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_50_0.png" src="_images/clustering_50_0.png" />
+<img alt="_images/clustering_47_0.png" src="_images/clustering_47_0.png" />
 </div>
 </div>
 </div>
