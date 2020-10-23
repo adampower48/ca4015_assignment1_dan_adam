@@ -467,25 +467,15 @@
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_cluster_A</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">]])</span>
-<span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_A</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_A</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">AttributeError</span><span class="g g-Whitespace">                            </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="n">f4ef16cced7f</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="n">agg_cluster_A</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">]])</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_A</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="n">plt</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="ne">AttributeError</span>: module &#39;matplotlib.pyplot&#39; has no attribute &#39;set_xlabel&#39;
-</pre></div>
-</div>
-<img alt="_images/clustering_16_1.png" src="_images/clustering_16_1.png" />
+<img alt="_images/clustering_16_0.png" src="_images/clustering_16_0.png" />
 </div>
 </div>
 <p>These two clusters do not however show much separation for the other parameters. Looking at the 9 boxes in the lower right of the plot, we see that the two clusters are almost completely overlapping.</p>
@@ -507,8 +497,9 @@
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">agg_cluster_all</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
-<span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_all</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">df_orl</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">,</span> <span class="s2">&quot;A-&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">agg_cluster_all</span><span class="o">.</span><span class="n">labels_</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;A+&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -604,9 +595,8 @@ The principle for calculating the distortion for each number of cluster stems ba
 <p>The equation for this coefficient is below</p>
 <div class="math notranslate nohighlight">
 \[a(i) = \frac{1}{|C_i-1|}  \sum_{j \epsilon C_i, i≠j}{d(i, j)} \]</div>
-<p>where $<span class="math notranslate nohighlight">\(a(i)\)</span>$ is the measure of how well a point is assigned to its cluster. The smaller the value, the better assigned it is to its cluster.</p>
-<div class="math notranslate nohighlight">
-\[{d(i, j)}$$ is the distance between points i and j within cluster $$C_i\]</div>
+<p>where <span class="math notranslate nohighlight">\(a(i)\)</span> is the measure of how well a point is assigned to its cluster. The smaller the value, the better assigned it is to its cluster.</p>
+<p><span class="math notranslate nohighlight">\({d(i, j)}\)</span> is the distance between points i and j within cluster <span class="math notranslate nohighlight">\(C_i\)</span></p>
 <div class="section" id="id1">
 <h4>K-Means<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <p>For K-Means clustering, we see peaks in silhouette score at 2 and 4 clusters.</p>
@@ -676,6 +666,26 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 <div class="section" id="k-means-k-2">
 <h4>K-Means (k=2)<a class="headerlink" href="#k-means-k-2" title="Permalink to this headline">¶</a></h4>
+<p>With just two clusters, K-means has a hard time fitting the clusters to the old and young groups. While most of the young group is in cluster 1, it also contains a lot of the old group.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans2</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[[</span><span class="s2">&quot;BetaF&quot;</span><span class="p">,</span> <span class="s2">&quot;BetaP&quot;</span><span class="p">]])</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">kmeans2</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="n">cm</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Cluster&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Age&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/clustering_42_0.png" src="_images/clustering_42_0.png" />
+</div>
+</div>
 </div>
 <div class="section" id="k-means-k-3">
 <h4>K-Means (k=3)<a class="headerlink" href="#k-means-k-3" title="Permalink to this headline">¶</a></h4>
@@ -695,13 +705,13 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_43_0.png" src="_images/clustering_43_0.png" />
+<img alt="_images/clustering_44_0.png" src="_images/clustering_44_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="hierarchical-agglomerative-k-2">
 <h4>Hierarchical Agglomerative (k=2)<a class="headerlink" href="#hierarchical-agglomerative-k-2" title="Permalink to this headline">¶</a></h4>
-<p>With just 2 clusters, the separation between young and old is not very good. While most of the young datapoints are covered by cluster 0, the old datapoints are split between the two.</p>
+<p>With just 2 clusters, the separation between young and old is slightly better than that of K-means, but it still is not very good. While most of the young datapoints are covered by cluster 0, the old datapoints are split between the two.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">df_orl</span><span class="p">[</span><span class="s2">&quot;subjID_label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">agg_cluster_all</span><span class="o">.</span><span class="n">labels_</span><span class="p">)</span>
@@ -717,7 +727,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_45_0.png" src="_images/clustering_45_0.png" />
+<img alt="_images/clustering_46_0.png" src="_images/clustering_46_0.png" />
 </div>
 </div>
 </div>
@@ -739,7 +749,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_47_0.png" src="_images/clustering_47_0.png" />
+<img alt="_images/clustering_48_0.png" src="_images/clustering_48_0.png" />
 </div>
 </div>
 </div>

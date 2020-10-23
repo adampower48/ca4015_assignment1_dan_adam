@@ -77,14 +77,15 @@ plt.show()
 
 
 agg_cluster_A = AgglomerativeClustering().fit(df_orl[["A+", "A-"]])
-df_orl.plot.scatter("A+", "A-", c=agg_cluster_A.labels_, cmap="Set1")
-plt.set_xlabel("A+")
+fig, ax = plt.subplots()
+df_orl.plot.scatter("A+", "A-", c=agg_cluster_A.labels_, cmap="Set1", ax=ax)
+ax.set_xlabel("A+")
 plt.show()
 
 
 # These two clusters do not however show much separation for the other parameters. Looking at the 9 boxes in the lower right of the plot, we see that the two clusters are almost completely overlapping.
 
-# In[82]:
+# In[7]:
 
 
 pd.plotting.scatter_matrix(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]], figsize=(10,10), hist_kwds=dict(bins=50), c=agg_cluster_A.labels_, cmap="Set1")
@@ -95,18 +96,19 @@ plt.show()
 
 # When we cluster using all of the available parameters, there is initially no clear separation when comparing the previous A+ and A- parameters.
 
-# In[84]:
+# In[8]:
 
 
 agg_cluster_all = AgglomerativeClustering().fit(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]])
-df_orl.plot.scatter("A+", "A-", c=agg_cluster_all.labels_, cmap="Set1")
-plt.set_xlabel("A+")
+fig, ax = plt.subplots()
+df_orl.plot.scatter("A+", "A-", c=agg_cluster_all.labels_, cmap="Set1", ax=ax)
+ax.set_xlabel("A+")
 plt.show()
 
 
 # However when we compare all parameters, we see clear separation across a number of parameters in particular $\beta_P$. There is also some level of distiction between the clusters for K and $\beta_F$ parameters.
 
-# In[26]:
+# In[9]:
 
 
 pd.plotting.scatter_matrix(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]], figsize=(10,10), hist_kwds=dict(bins=50), c=agg_cluster_all.labels_, cmap="Set1")
@@ -117,7 +119,7 @@ plt.show()
 
 # Clustering the old group alone, there is a clear separation based on the BetaP parameter dividing the two distributions we identified during data exploration. The other parameters seem to be well mixed between the clusters, meaning there's no significant difference to cluster based on.
 
-# In[32]:
+# In[10]:
 
 
 df_orl_old = df_orl[df_orl["subjID"] == "old"]
@@ -128,7 +130,7 @@ plt.show()
 
 # ### Using more than two clusters
 
-# In[87]:
+# In[11]:
 
 
 agg_cluster3 = AgglomerativeClustering(n_clusters=3).fit(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]])
@@ -148,7 +150,7 @@ plt.show()
 
 # The elbow method shows that for these parameters the optimal number of clusters for K-means is 2/3.
 
-# In[36]:
+# In[12]:
 
 
 df1 = df_orl[["A+", "A-", "K", "BetaF", "BetaP"]]
@@ -176,14 +178,14 @@ plt.show()
 # 
 # $$a(i) = \frac{1}{|C_i-1|}  \sum_{j \epsilon C_i, i≠j}{d(i, j)} $$
 # 
-# where $$a(i)$$ is the measure of how well a point is assigned to its cluster. The smaller the value, the better assigned it is to its cluster.
+# where $a(i)$ is the measure of how well a point is assigned to its cluster. The smaller the value, the better assigned it is to its cluster.
 # 
-# $${d(i, j)}$$ is the distance between points i and j within cluster $$C_i$$
+# ${d(i, j)}$ is the distance between points i and j within cluster $C_i$
 
 # #### K-Means
 # For K-Means clustering, we see peaks in silhouette score at 2 and 4 clusters. 
 
-# In[102]:
+# In[13]:
 
 
 df1 = df_orl[["A+", "A-", "K", "BetaF", "BetaP"]]
@@ -205,7 +207,7 @@ plt.show()
 # #### Hierarchical Agglomerative
 # For Hierarchical Agglomerative clustering, we see a single peak in silhouette score at 2 clusters. This is slightly higher than k-means at two clusters, but lower for all other number of clusters.  
 
-# In[103]:
+# In[14]:
 
 
 df1 = df_orl[["A+", "A-", "K", "BetaF", "BetaP"]]
@@ -226,7 +228,7 @@ plt.show()
 
 # ### Using clusters to classify age
 
-# In[70]:
+# In[15]:
 
 
 def confusion_matrix(labels_a, labels_b):
@@ -236,11 +238,27 @@ def confusion_matrix(labels_a, labels_b):
 
 
 # #### K-Means (k=2)
+# With just two clusters, K-means has a hard time fitting the clusters to the old and young groups. While most of the young group is in cluster 1, it also contains a lot of the old group.
+
+# In[16]:
+
+
+kmeans2 = KMeans(n_clusters=2).fit(df_orl[["BetaF", "BetaP"]])
+cm = confusion_matrix(df_orl["subjID_label"].values, kmeans2.labels_)
+
+fig, ax = plt.subplots()
+sn.heatmap(cm, ax=ax, annot=cm)
+
+ax.set_xlabel("Cluster")
+ax.set_ylabel("Age")
+ax.set_yticklabels(df_orl["subjID"].astype("category").cat.categories)
+plt.show()
+
 
 # #### K-Means (k=3)
 # With three clusters, K-means successfully clusters the majority of the young participants in a single group. We also see however that the old group is distributed across all three clusters. This lines up with what we see in the data, the parameters for the old participants are much more spread out. 
 
-# In[92]:
+# In[17]:
 
 
 cm = confusion_matrix(df_orl["subjID_label"].values, kmeans_betas.labels_)
@@ -255,9 +273,9 @@ plt.show()
 
 
 # #### Hierarchical Agglomerative (k=2)
-# With just 2 clusters, the separation between young and old is not very good. While most of the young datapoints are covered by cluster 0, the old datapoints are split between the two.
+# With just 2 clusters, the separation between young and old is slightly better than that of K-means, but it still is not very good. While most of the young datapoints are covered by cluster 0, the old datapoints are split between the two.
 
-# In[91]:
+# In[18]:
 
 
 cm = confusion_matrix(df_orl["subjID_label"].values, agg_cluster_all.labels_)
@@ -274,7 +292,7 @@ plt.show()
 # #### Hierarchical Agglomerative (k=3)
 # With three clusters it is somewhat improved. Cluster 2 contains mostly young, and cluster 1 has mostly old. We also see a cluster where the two are evenly split, which could indicate that there is a sizeable overlap between the two groups. 
 
-# In[88]:
+# In[19]:
 
 
 cm = confusion_matrix(df_orl["subjID_label"].values, agg_cluster3.labels_)
