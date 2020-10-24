@@ -269,13 +269,11 @@
 <h2>Choosing the distributions<a class="headerlink" href="#choosing-the-distributions" title="Permalink to this headline">¶</a></h2>
 <p>The parameters seem to follow 3 distinct distributions:</p>
 <ul class="simple">
-<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">Normal distribution</a>: Both <span class="math notranslate nohighlight">\(\beta_F\)</span> and <span class="math notranslate nohighlight">\(\beta_P\)</span> seem to be normally distributed. This is parameterised by the mean <span class="math notranslate nohighlight">\(\mu\)</span> (loc) and standard deviation <span class="math notranslate nohighlight">\(\sigma\)</span> (scale) of the data.<br />
-Details of the functions used to model this distribution can be found <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html">here</a>.</p></li>
-<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution">Beta(<span class="math notranslate nohighlight">\(\alpha\)</span>,<span class="math notranslate nohighlight">\(\beta\)</span>) distribution</a>: A+ and A- are within the range [0, 1], which means we can use this distribution to model them. The beta distribution can be used to model a large variety of distributions within this range with shape parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>.<br />
-Details of the functions used to model the distributions can be found <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html">here</a></p></li>
-<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Gamma_distribution">Gamma distribution</a>: Finally, the K parameter seems to roughly follow a poisson distribution which would represent the rate of decay. As the poisson distribution is only valid for integer values, we can use the gamma function as a continuous approximation. The gamma function is parameterised by shape <span class="math notranslate nohighlight">\(\alpha\)</span> and scale <span class="math notranslate nohighlight">\(\theta\)</span>.<br />
-Details of the functions used to model the distributions can be found <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gamma.html">here</a></p></li>
+<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Normal_distribution">Normal distribution</a>: Both <span class="math notranslate nohighlight">\(\beta_F\)</span> and <span class="math notranslate nohighlight">\(\beta_P\)</span> seem to be normally distributed. This is parameterised by the mean <span class="math notranslate nohighlight">\(\mu\)</span> (loc) and standard deviation <span class="math notranslate nohighlight">\(\sigma\)</span> (scale) of the data.</p></li>
+<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Beta_distribution">Beta distribution</a>: A+ and A- are within the range [0, 1], which means we can use this distribution to model them. The beta distribution can be used to model a large variety of distributions within this range with shape parameters <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\beta\)</span>.</p></li>
+<li><p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Gamma_distribution">Gamma distribution</a>: Finally, the K parameter seems to roughly follow a poisson distribution which would represent the rate of decay. As the poisson distribution is only valid for integer values, we can use the gamma function as a continuous approximation. The gamma function is parameterised by shape <span class="math notranslate nohighlight">\(\alpha\)</span> and scale <span class="math notranslate nohighlight">\(\theta\)</span>.</p></li>
 </ul>
+<p>Details of the functions used to model the distributions can be found here: <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.norm.html">Normal</a>, <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.beta.html">Beta</a>, <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.gamma.html">Gamma</a></p>
 </div>
 <div class="section" id="modelling-a-single-parameter">
 <h2>Modelling a single parameter<a class="headerlink" href="#modelling-a-single-parameter" title="Permalink to this headline">¶</a></h2>
@@ -507,43 +505,43 @@ Here we generate 5000 fake data points based on the entire dataset.</p>
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.227911</td>
-      <td>0.115554</td>
-      <td>1.707967</td>
-      <td>1.173162</td>
-      <td>-12.478572</td>
+      <td>0.261309</td>
+      <td>0.168667</td>
+      <td>1.779280</td>
+      <td>1.730511</td>
+      <td>-1.495619</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.075196</td>
-      <td>0.121740</td>
-      <td>1.256373</td>
-      <td>1.775510</td>
-      <td>-3.718412</td>
+      <td>0.078284</td>
+      <td>0.051535</td>
+      <td>1.707949</td>
+      <td>-0.321549</td>
+      <td>1.474896</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.120966</td>
-      <td>0.064706</td>
-      <td>0.160554</td>
-      <td>1.818128</td>
-      <td>1.088247</td>
+      <td>0.069887</td>
+      <td>0.027349</td>
+      <td>0.190077</td>
+      <td>3.100703</td>
+      <td>7.771008</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.250161</td>
-      <td>0.170665</td>
-      <td>2.426511</td>
-      <td>3.328632</td>
-      <td>3.929356</td>
+      <td>0.280990</td>
+      <td>0.110216</td>
+      <td>1.770626</td>
+      <td>1.809806</td>
+      <td>3.781819</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.217432</td>
-      <td>0.044932</td>
-      <td>0.170430</td>
-      <td>2.909836</td>
-      <td>0.614961</td>
+      <td>0.144279</td>
+      <td>0.168102</td>
+      <td>1.097024</td>
+      <td>2.331919</td>
+      <td>1.293506</td>
     </tr>
   </tbody>
 </table>
@@ -993,102 +991,102 @@ Finally the <span class="math notranslate nohighlight">\(\beta_P\)</span> parame
   </thead>
   <tbody>
     <tr>
-      <th>1904</th>
-      <td>0.140479</td>
-      <td>0.112878</td>
-      <td>0.603330</td>
-      <td>0.632468</td>
-      <td>-1.360894</td>
+      <th>2965</th>
+      <td>0.400275</td>
+      <td>0.058571</td>
+      <td>0.934803</td>
+      <td>1.929026</td>
+      <td>4.281307</td>
       <td>young</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>3374</th>
-      <td>0.017179</td>
-      <td>0.062540</td>
-      <td>1.070354</td>
-      <td>3.527746</td>
-      <td>-12.293052</td>
-      <td>old - type A</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>5401</th>
-      <td>0.060951</td>
-      <td>0.029223</td>
-      <td>0.441780</td>
-      <td>1.943659</td>
-      <td>4.049444</td>
+      <th>5440</th>
+      <td>0.077169</td>
+      <td>0.178693</td>
+      <td>0.285304</td>
+      <td>2.687541</td>
+      <td>2.052571</td>
       <td>young</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>4458</th>
-      <td>0.178414</td>
-      <td>0.084280</td>
-      <td>1.277937</td>
-      <td>2.445875</td>
-      <td>-2.473125</td>
+      <th>3648</th>
+      <td>0.352947</td>
+      <td>0.185282</td>
+      <td>0.591703</td>
+      <td>1.080223</td>
+      <td>0.316973</td>
       <td>young</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>4764</th>
-      <td>0.349365</td>
-      <td>0.036323</td>
-      <td>1.755568</td>
-      <td>4.540674</td>
-      <td>-0.450140</td>
+      <th>3896</th>
+      <td>0.221789</td>
+      <td>0.048638</td>
+      <td>0.613568</td>
+      <td>1.581120</td>
+      <td>1.723694</td>
       <td>young</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>7694</th>
-      <td>0.134875</td>
-      <td>0.109999</td>
-      <td>0.533321</td>
-      <td>1.593879</td>
-      <td>-1.136153</td>
+      <th>7432</th>
+      <td>0.190310</td>
+      <td>0.086048</td>
+      <td>0.680496</td>
+      <td>-0.350009</td>
+      <td>-2.353153</td>
       <td>young</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>8936</th>
-      <td>0.429102</td>
-      <td>0.087520</td>
-      <td>0.181590</td>
-      <td>1.669007</td>
-      <td>-2.400796</td>
+      <th>3528</th>
+      <td>0.105519</td>
+      <td>0.043896</td>
+      <td>0.606347</td>
+      <td>-0.178767</td>
+      <td>0.474887</td>
       <td>young</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>1986</th>
-      <td>0.108300</td>
-      <td>0.107189</td>
-      <td>0.387203</td>
-      <td>2.047554</td>
-      <td>-3.519595</td>
+      <th>7423</th>
+      <td>0.114843</td>
+      <td>0.057351</td>
+      <td>0.329670</td>
+      <td>0.561362</td>
+      <td>-3.587337</td>
       <td>young</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>5194</th>
-      <td>0.091881</td>
-      <td>0.021359</td>
-      <td>1.028345</td>
-      <td>3.010482</td>
-      <td>-4.483753</td>
+      <th>8149</th>
+      <td>0.221485</td>
+      <td>0.030208</td>
+      <td>0.449922</td>
+      <td>1.868200</td>
+      <td>-2.639348</td>
       <td>young</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>1355</th>
-      <td>0.196939</td>
-      <td>0.025528</td>
-      <td>0.682759</td>
-      <td>3.273356</td>
-      <td>1.865040</td>
+      <th>1594</th>
+      <td>0.463105</td>
+      <td>0.062203</td>
+      <td>1.660785</td>
+      <td>0.320503</td>
+      <td>9.905021</td>
+      <td>old - type B</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>7429</th>
+      <td>0.131248</td>
+      <td>0.074713</td>
+      <td>0.764382</td>
+      <td>2.553813</td>
+      <td>1.204364</td>
       <td>young</td>
       <td>2</td>
     </tr>
