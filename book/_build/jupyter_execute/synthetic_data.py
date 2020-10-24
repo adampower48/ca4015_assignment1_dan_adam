@@ -12,7 +12,7 @@ from scipy.stats import beta, norm, gamma
 import matplotlib.pyplot as plt
 
 
-# In[2]:
+# In[4]:
 
 
 df_orl = pd.read_csv("data/parameter_igt_orl.csv")
@@ -33,7 +33,7 @@ df_orl.head()
 # ## Modelling a single parameter
 # Here we show show fitting the normal distribution works for the $\beta_P$ parameter. The plot shows the fitted distribution in orange against the real data in blue.  
 
-# In[3]:
+# In[70]:
 
 
 mean, std = norm.fit(df_orl["BetaP"])
@@ -41,7 +41,7 @@ print("mean:", mean)
 print("std:", std)
 
 
-# In[4]:
+# In[71]:
 
 
 x = np.linspace(-15, 15, 100)
@@ -56,7 +56,7 @@ plt.show()
 
 # First we define functions to fit each of the model parameters to their distributions.
 
-# In[5]:
+# In[213]:
 
 
 def fit_norm(s: pd.Series):
@@ -92,13 +92,13 @@ def fit_all_params(df: pd.DataFrame):
 
 # Then we can apply this across all of our parameters to get model each one.
 
-# In[6]:
+# In[228]:
 
 
 get_ipython().run_cell_magic('capture', '--no-stdout --no-display', 'dist_params = fit_all_params(df_orl)\npd.DataFrame(dist_params)')
 
 
-# In[7]:
+# In[216]:
 
 
 fig, ax = plt.subplots(2, 3, figsize=(15, 10))
@@ -135,7 +135,7 @@ plt.show()
 # For now we assume that each parameter is **independent**, though this may not be the case in reality. 
 # Here we generate 5000 fake data points based on the entire dataset.
 
-# In[8]:
+# In[217]:
 
 
 synth_data = pd.DataFrame()
@@ -152,7 +152,7 @@ for model_param, d_params in dist_params.items():
 synth_data.head()
 
 
-# In[9]:
+# In[218]:
 
 
 pd.plotting.scatter_matrix(synth_data, figsize=(10,10), hist_kwds=dict(bins=50), alpha=0.2)
@@ -165,7 +165,7 @@ plt.show()
 
 # ### Young
 
-# In[10]:
+# In[229]:
 
 
 get_ipython().run_cell_magic('capture', '--no-stdout --no-display', '\ndf_orl_young = df_orl[df_orl["subjID"] == "young"]\ndist_params_young = fit_all_params(df_orl_young)\npd.DataFrame(dist_params_young)')
@@ -173,13 +173,13 @@ get_ipython().run_cell_magic('capture', '--no-stdout --no-display', '\ndf_orl_yo
 
 # ### Old
 
-# In[11]:
+# In[230]:
 
 
 get_ipython().run_cell_magic('capture', '--no-stdout --no-display', '\ndf_orl_old = df_orl[df_orl["subjID"] == "old"]\ndist_params_old = fit_all_params(df_orl_old)\npd.DataFrame(dist_params_old)')
 
 
-# In[12]:
+# In[231]:
 
 
 beta_p_split = 7
@@ -187,7 +187,7 @@ beta_p_split = 7
 
 # #### Type A
 
-# In[13]:
+# In[232]:
 
 
 get_ipython().run_cell_magic('capture', '--no-stdout --no-display', '\ndf_orl_old_a = df_orl[(df_orl["subjID"] == "old") & (df_orl["BetaP"] <= beta_p_split)]\ndist_params_old_a = fit_all_params(df_orl_old_a)\npd.DataFrame(dist_params_old_a)')
@@ -195,7 +195,7 @@ get_ipython().run_cell_magic('capture', '--no-stdout --no-display', '\ndf_orl_ol
 
 # #### Type B
 
-# In[14]:
+# In[233]:
 
 
 get_ipython().run_cell_magic('capture', '--no-stdout --no-display', '\ndf_orl_old_b = df_orl[(df_orl["subjID"] == "old") & (df_orl["BetaP"] > beta_p_split)]\ndist_params_old_b = fit_all_params(df_orl_old_b)\npd.DataFrame(dist_params_old_b)')
@@ -203,7 +203,7 @@ get_ipython().run_cell_magic('capture', '--no-stdout --no-display', '\ndf_orl_ol
 
 # ## Results
 
-# In[15]:
+# In[224]:
 
 
 # Function to draw row of plots
@@ -228,7 +228,7 @@ def draw_dist_fit(dist_params, data_df, ax_row, y_label):
     ax_row[0].set_ylabel(y_label)
 
 
-# In[16]:
+# In[225]:
 
 
 fig, ax = plt.subplots(4, 5, figsize=(25, 10))
@@ -254,7 +254,7 @@ plt.show()
 # ### Putting the groups back together
 # Finally we can put all of this together to model the entire dataset. We generate new samples for each group in proportion to their representation in the entire dataset.  
 
-# In[17]:
+# In[244]:
 
 
 groups = ["young", "old - type A", "old - type B"]
@@ -283,7 +283,7 @@ synth_df["group_label"] = synth_df["group"].astype("category").cat.codes  # Add 
 synth_df.sample(10)
 
 
-# In[18]:
+# In[245]:
 
 
 pd.plotting.scatter_matrix(synth_df.drop(columns="group_label"), figsize=(10,10), hist_kwds=dict(bins=50), alpha=0.1, c=synth_df["group_label"])

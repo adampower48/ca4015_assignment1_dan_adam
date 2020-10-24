@@ -11,7 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-# In[2]:
+# In[19]:
 
 
 df_orl = pd.read_csv("data/parameter_igt_orl.csv")
@@ -32,10 +32,11 @@ df_orl.head()
 # ### Entire dataset
 
 # Looking at the whole dataset, each parameter seems to follow a distribution nicely. A+ and A- are skewed to the left, K is more uniform but slightly skewed left, and both $\beta_F$ and $\beta_P$ roughly follow normal distributions.  
-# There is also a clear difference in the variation between the groups. The young group is much more concentrated, and the old is much more spread out.
+# There is also a clear difference in the variation between the groups. The young group is much more concentrated, and the old is much more spread out. 
+# In this plot and all other plots in this book, the grey marks represent young people and the red points represent the old participants.
 # 
 
-# In[3]:
+# In[18]:
 
 
 pd.plotting.scatter_matrix(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]], figsize=(10,10), hist_kwds=dict(bins=50), c=df_orl["subjID_label"], cmap="Set1")
@@ -46,7 +47,7 @@ plt.show()
 
 # ### Young Group
 
-# In[4]:
+# In[16]:
 
 
 df_orl_young = df_orl[df_orl["subjID"] == "young"]
@@ -56,7 +57,7 @@ plt.show()
 
 # ### Old Group
 
-# In[5]:
+# In[17]:
 
 
 df_orl_old = df_orl[df_orl["subjID"] == "old"]
@@ -70,13 +71,13 @@ plt.show()
 # The other parameters do not seem to have any difference between these groups, with the exception of **K**, which is slightly skewed left or right depending on the group.
 # We are dealing with less data as we drill down further, so it would be difficult to come to any solid conclusions by going deeper.
 
-# In[6]:
+# In[22]:
 
 
 beta_p_split = 7
 
 
-# In[7]:
+# In[25]:
 
 
 _df = df_orl_old[df_orl_old["BetaP"] <= beta_p_split]
@@ -84,7 +85,7 @@ pd.plotting.scatter_matrix(_df[ ["A+", "A-", "K", "BetaF", "BetaP"]], figsize=(1
 plt.show()
 
 
-# In[8]:
+# In[26]:
 
 
 _df = df_orl_old[df_orl_old["BetaP"] > beta_p_split]

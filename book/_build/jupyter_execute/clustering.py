@@ -14,7 +14,7 @@ from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.metrics import silhouette_score
 
 
-# In[2]:
+# In[11]:
 
 
 df_orl = pd.read_csv("data/parameter_igt_orl.csv")
@@ -27,14 +27,14 @@ df_orl.head()
 
 # Here we are investigating the clustering between two of the paramaters of the model. BetaF relates to the person's outcome frequency. Furthermore, when this parameter is less than zero it means the person prefers decks of low win frequency, and a high BetaF score means that they prefer decks with a high win frequency. BetaP is the parameter which accounts for the participant's perseverence in choosing decks. Values less than zero indicate a tendency to switch between decks and values greater than zero means the participant likes to stick with the same deck more often.
 
-# In[3]:
+# In[12]:
 
 
 kmeans_betas = KMeans(n_clusters=3).fit(df_orl[["BetaF", "BetaP"]])
 centroids_betas = kmeans_betas.cluster_centers_
 
 
-# In[4]:
+# In[13]:
 
 
 plt.scatter(df_orl['BetaF'], df_orl['BetaP'], c= kmeans_betas.labels_, cmap = "Set1", s=50, alpha=0.5)
@@ -46,7 +46,7 @@ plt.show()
 
 # There are clearly three defined clusters when plotting these two parameters with the data. Let's compare this with the plot showing young vs old participants.
 
-# In[5]:
+# In[14]:
 
 
 scatter = plt.scatter(df_orl['BetaF'], df_orl['BetaP'], c=df_orl['subjID_label'], cmap="Set1_r")
@@ -60,20 +60,20 @@ plt.show()
 # #it is easy to see with plots just above it
 # #Wording could be improved but will be refined later
 
-# ### BetaP Cluster Findings
+# ### Cluster Findings
 
+# #### BetaP
 # This second plot helps to understand the clusters in the first graph more clearly now. The clusters are primarily based on three different groups of participants and their balues for BetaP, the perseverence parameter. The old people are mainly split into two clusters: those with a high value for perseverence and those with a low value for perseverence. The middle cluster consists mainly of young people, whose values for perseverence are more neutral, lying between +-5 in BetaP.
 
-# ### BetaK Cluster Findings
-
-# As expected, most participants prefer a higher winning frequency, with 143 of the 153 participants having a BetaF score greater than 0. The outcome frequency value is also noticeable between the clusters. The cluster of primarily old people with a high perseverence score has lower average outcome frequency than the group of primarily old people with a low perseverence score. The central cluster of mainly young people is more neutral, with the majority of the participants having values between 0 and 3.
+# #### BetaK
+# As expected, most participants prefer a higher winning frequency, with 143 of the 153 participants having a BetaF score greater than 0. The outcome frequency value is also noticeable between the clusters. The central cluster of mainly young people is more neutral, with the majority of the participants having values between 0 and 3. The cluster of primarily old people with a high perseverence score has lower average outcome frequency than the group of primarily old people with a low perseverence score. It appears that the participants who preferred to switch decks more often had a higher win frequency, looking at the clusters and their centroids. This is easily observed in the plot where the distribution goes from top left to bottom right.
 
 # ## Hierarchical Agglomerative
 # ### Cluster based on the A+ and A- columns only
 
 # Using just the two A parameters, we see two clusters clearly split between high and low values for A+ and a mix across A-.
 
-# In[6]:
+# In[15]:
 
 
 agg_cluster_A = AgglomerativeClustering().fit(df_orl[["A+", "A-"]])
@@ -85,7 +85,7 @@ plt.show()
 
 # These two clusters do not however show much separation for the other parameters. Looking at the 9 boxes in the lower right of the plot, we see that the two clusters are almost completely overlapping.
 
-# In[7]:
+# In[16]:
 
 
 pd.plotting.scatter_matrix(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]], figsize=(10,10), hist_kwds=dict(bins=50), c=agg_cluster_A.labels_, cmap="Set1")
@@ -96,7 +96,7 @@ plt.show()
 
 # When we cluster using all of the available parameters, there is initially no clear separation when comparing the previous A+ and A- parameters.
 
-# In[8]:
+# In[18]:
 
 
 agg_cluster_all = AgglomerativeClustering().fit(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]])
@@ -108,7 +108,7 @@ plt.show()
 
 # However when we compare all parameters, we see clear separation across a number of parameters in particular $\beta_P$. There is also some level of distiction between the clusters for K and $\beta_F$ parameters.
 
-# In[9]:
+# In[19]:
 
 
 pd.plotting.scatter_matrix(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]], figsize=(10,10), hist_kwds=dict(bins=50), c=agg_cluster_all.labels_, cmap="Set1")
@@ -119,7 +119,7 @@ plt.show()
 
 # Clustering the old group alone, there is a clear separation based on the BetaP parameter dividing the two distributions we identified during data exploration. The other parameters seem to be well mixed between the clusters, meaning there's no significant difference to cluster based on.
 
-# In[10]:
+# In[20]:
 
 
 df_orl_old = df_orl[df_orl["subjID"] == "old"]
@@ -130,7 +130,7 @@ plt.show()
 
 # ### Using more than two clusters
 
-# In[11]:
+# In[21]:
 
 
 agg_cluster3 = AgglomerativeClustering(n_clusters=3).fit(df_orl[["A+", "A-", "K", "BetaF", "BetaP"]])
@@ -150,7 +150,7 @@ plt.show()
 
 # The elbow method shows that for these parameters the optimal number of clusters for K-means is 2/3.
 
-# In[12]:
+# In[22]:
 
 
 df1 = df_orl[["A+", "A-", "K", "BetaF", "BetaP"]]
@@ -185,7 +185,7 @@ plt.show()
 # #### K-Means
 # For K-Means clustering, we see peaks in silhouette score at 2 and 4 clusters. 
 
-# In[13]:
+# In[23]:
 
 
 df1 = df_orl[["A+", "A-", "K", "BetaF", "BetaP"]]
@@ -207,7 +207,7 @@ plt.show()
 # #### Hierarchical Agglomerative
 # For Hierarchical Agglomerative clustering, we see a single peak in silhouette score at 2 clusters. This is slightly higher than k-means at two clusters, but lower for all other number of clusters.  
 
-# In[14]:
+# In[24]:
 
 
 df1 = df_orl[["A+", "A-", "K", "BetaF", "BetaP"]]
@@ -228,7 +228,7 @@ plt.show()
 
 # ### Using clusters to classify age
 
-# In[15]:
+# In[25]:
 
 
 def confusion_matrix(labels_a, labels_b):
@@ -240,7 +240,7 @@ def confusion_matrix(labels_a, labels_b):
 # #### K-Means (k=2)
 # With just two clusters, K-means has a hard time fitting the clusters to the old and young groups. While most of the young group is in cluster 1, it also contains a lot of the old group.
 
-# In[16]:
+# In[30]:
 
 
 kmeans2 = KMeans(n_clusters=2).fit(df_orl[["BetaF", "BetaP"]])
@@ -258,7 +258,7 @@ plt.show()
 # #### K-Means (k=3)
 # With three clusters, K-means successfully clusters the majority of the young participants in a single group. We also see however that the old group is distributed across all three clusters. This lines up with what we see in the data, the parameters for the old participants are much more spread out. 
 
-# In[17]:
+# In[26]:
 
 
 cm = confusion_matrix(df_orl["subjID_label"].values, kmeans_betas.labels_)
@@ -275,7 +275,7 @@ plt.show()
 # #### Hierarchical Agglomerative (k=2)
 # With just 2 clusters, the separation between young and old is slightly better than that of K-means, but it still is not very good. While most of the young datapoints are covered by cluster 0, the old datapoints are split between the two.
 
-# In[18]:
+# In[27]:
 
 
 cm = confusion_matrix(df_orl["subjID_label"].values, agg_cluster_all.labels_)
@@ -292,7 +292,7 @@ plt.show()
 # #### Hierarchical Agglomerative (k=3)
 # With three clusters it is somewhat improved. Cluster 2 contains mostly young, and cluster 1 has mostly old. We also see a cluster where the two are evenly split, which could indicate that there is a sizeable overlap between the two groups. 
 
-# In[19]:
+# In[28]:
 
 
 cm = confusion_matrix(df_orl["subjID_label"].values, agg_cluster3.labels_)

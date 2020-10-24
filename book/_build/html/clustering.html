@@ -32,17 +32,17 @@
     
   <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
 
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/togglebutton.js"></script>
-    <script type="text/javascript" src="_static/clipboard.min.js"></script>
-    <script type="text/javascript" src="_static/copybutton.js"></script>
-    <script type="text/javascript">var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script type="text/javascript" src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -105,7 +105,7 @@
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="conclusion.html">
-   Conclusion
+   Conclusions
   </a>
  </li>
 </ul>
@@ -200,14 +200,21 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#betap-cluster-findings">
-     BetaP Cluster Findings
+    <a class="reference internal nav-link" href="#cluster-findings">
+     Cluster Findings
     </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#betak-cluster-findings">
-     BetaK Cluster Findings
-    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#betap">
+       BetaP
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#betak">
+       BetaK
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -450,13 +457,16 @@
 #it is easy to see with plots just above it
 #Wording could be improved but will be refined later</p>
 </div>
-<div class="section" id="betap-cluster-findings">
-<h3>BetaP Cluster Findings<a class="headerlink" href="#betap-cluster-findings" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="cluster-findings">
+<h3>Cluster Findings<a class="headerlink" href="#cluster-findings" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="betap">
+<h4>BetaP<a class="headerlink" href="#betap" title="Permalink to this headline">¶</a></h4>
 <p>This second plot helps to understand the clusters in the first graph more clearly now. The clusters are primarily based on three different groups of participants and their balues for BetaP, the perseverence parameter. The old people are mainly split into two clusters: those with a high value for perseverence and those with a low value for perseverence. The middle cluster consists mainly of young people, whose values for perseverence are more neutral, lying between +-5 in BetaP.</p>
 </div>
-<div class="section" id="betak-cluster-findings">
-<h3>BetaK Cluster Findings<a class="headerlink" href="#betak-cluster-findings" title="Permalink to this headline">¶</a></h3>
-<p>As expected, most participants prefer a higher winning frequency, with 143 of the 153 participants having a BetaF score greater than 0. The outcome frequency value is also noticeable between the clusters. The cluster of primarily old people with a high perseverence score has lower average outcome frequency than the group of primarily old people with a low perseverence score. The central cluster of mainly young people is more neutral, with the majority of the participants having values between 0 and 3.</p>
+<div class="section" id="betak">
+<h4>BetaK<a class="headerlink" href="#betak" title="Permalink to this headline">¶</a></h4>
+<p>As expected, most participants prefer a higher winning frequency, with 143 of the 153 participants having a BetaF score greater than 0. The outcome frequency value is also noticeable between the clusters. The central cluster of mainly young people is more neutral, with the majority of the participants having values between 0 and 3. The cluster of primarily old people with a high perseverence score has lower average outcome frequency than the group of primarily old people with a low perseverence score. It appears that the participants who preferred to switch decks more often had a higher win frequency, looking at the clusters and their centroids. This is easily observed in the plot where the distribution goes from top left to bottom right.</p>
+</div>
 </div>
 </div>
 <div class="section" id="hierarchical-agglomerative">
@@ -475,7 +485,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_16_0.png" src="_images/clustering_16_0.png" />
+<img alt="_images/clustering_15_0.png" src="_images/clustering_15_0.png" />
 </div>
 </div>
 <p>These two clusters do not however show much separation for the other parameters. Looking at the 9 boxes in the lower right of the plot, we see that the two clusters are almost completely overlapping.</p>
@@ -487,7 +497,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_18_0.png" src="_images/clustering_18_0.png" />
+<img alt="_images/clustering_17_0.png" src="_images/clustering_17_0.png" />
 </div>
 </div>
 </div>
@@ -505,7 +515,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_21_0.png" src="_images/clustering_21_0.png" />
+<img alt="_images/clustering_20_0.png" src="_images/clustering_20_0.png" />
 </div>
 </div>
 <p>However when we compare all parameters, we see clear separation across a number of parameters in particular <span class="math notranslate nohighlight">\(\beta_P\)</span>. There is also some level of distiction between the clusters for K and <span class="math notranslate nohighlight">\(\beta_F\)</span> parameters.</p>
@@ -517,7 +527,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_23_0.png" src="_images/clustering_23_0.png" />
+<img alt="_images/clustering_22_0.png" src="_images/clustering_22_0.png" />
 </div>
 </div>
 </div>
@@ -534,7 +544,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_26_0.png" src="_images/clustering_26_0.png" />
+<img alt="_images/clustering_25_0.png" src="_images/clustering_25_0.png" />
 </div>
 </div>
 </div>
@@ -549,7 +559,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_28_0.png" src="_images/clustering_28_0.png" />
+<img alt="_images/clustering_27_0.png" src="_images/clustering_27_0.png" />
 </div>
 </div>
 <p>There seems to be much better clusters for the BetaF &amp; BetaP parameters.</p>
@@ -584,7 +594,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_33_0.png" src="_images/clustering_33_0.png" />
+<img alt="_images/clustering_32_0.png" src="_images/clustering_32_0.png" />
 </div>
 </div>
 </div>
@@ -620,7 +630,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_36_0.png" src="_images/clustering_36_0.png" />
+<img alt="_images/clustering_35_0.png" src="_images/clustering_35_0.png" />
 </div>
 </div>
 </div>
@@ -647,7 +657,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_38_0.png" src="_images/clustering_38_0.png" />
+<img alt="_images/clustering_37_0.png" src="_images/clustering_37_0.png" />
 </div>
 </div>
 </div>
@@ -683,7 +693,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_42_0.png" src="_images/clustering_42_0.png" />
+<img alt="_images/clustering_41_0.png" src="_images/clustering_41_0.png" />
 </div>
 </div>
 </div>
@@ -705,7 +715,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_44_0.png" src="_images/clustering_44_0.png" />
+<img alt="_images/clustering_43_0.png" src="_images/clustering_43_0.png" />
 </div>
 </div>
 </div>
@@ -727,7 +737,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_46_0.png" src="_images/clustering_46_0.png" />
+<img alt="_images/clustering_45_0.png" src="_images/clustering_45_0.png" />
 </div>
 </div>
 </div>
@@ -749,7 +759,7 @@ The principle for calculating the distortion for each number of cluster stems ba
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/clustering_48_0.png" src="_images/clustering_48_0.png" />
+<img alt="_images/clustering_47_0.png" src="_images/clustering_47_0.png" />
 </div>
 </div>
 </div>

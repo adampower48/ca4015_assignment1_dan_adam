@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Conclusion &#8212; CA4015 Assignment 1 Book</title>
+    <title>Conclusions &#8212; CA4015 Assignment 1 Book</title>
     
   <link rel="stylesheet" href="_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -32,17 +32,17 @@
     
   <link rel="preload" as="script" href="_static/js/index.3da636dd464baa7582d2.js">
 
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/togglebutton.js"></script>
-    <script type="text/javascript" src="_static/clipboard.min.js"></script>
-    <script type="text/javascript" src="_static/copybutton.js"></script>
-    <script type="text/javascript">var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script type="text/javascript" src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -104,7 +104,7 @@
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Conclusion
+   Conclusions
   </a>
  </li>
 </ul>
@@ -183,6 +183,20 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#clustering">
+   Clustering
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -190,9 +204,21 @@
         
               <div>
                 
-  <div class="section" id="conclusion">
-<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h1>
-<p>todo</p>
+  <div class="section" id="conclusions">
+<h1>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="clustering">
+<h2>Clustering<a class="headerlink" href="#clustering" title="Permalink to this headline">¶</a></h2>
+<p>In this paper, we investigate the clustering of parameters of just one of the models used in the Iowa Gambling task, the Outcome-Representation Learning model. Our reason of choice was based on which system had the most interesting parameters to examine and cluster. Our findings in the data exploration page further proved our hypothesis after plotting the distributions of the parameters against each other.</p>
+<p>The most significant clustering result we discovered was when clustering BetaP and BetaK using K-Means. There were three distinct clusters of:</p>
+<ol class="simple">
+<li><p>A mainly old cluster of participants with a high perseverence.</p></li>
+<li><p>Another mainly old cluster of people with a low perseverence.</p></li>
+<li><p>A cluster of predominately young people centered around the middle with a more neutral BetaP score.</p></li>
+</ol>
+<p>This followed the distribution of the two parameters where, people who had a lower perseverence and preferred to switch decks in the task generally had a higher win frequency. Although there isn’t enough data to solidify this conclusion, this is the result we found significant.</p>
+<p>There are many possibilities for future work for this model. First and foremost, a higher sample size will be needed to support any hypotheses gathered from the model and its clusters. More information on each of the participants is paramount in explaining the clusters of data. For example, some studies show that people with orbifrontal cortex dysfunction tend to have a high value for the perseverence metric. Further studies of the task and the participant information will result in the discovery of certain phenotypes’ tendencies of actions during the task.</p>
+<p>Exploring the paramater plots revealed their distributions. Based on the data given to us, they appear to follow: Normal distribution for <span class="math notranslate nohighlight">\(\beta_F\)</span> and <span class="math notranslate nohighlight">\(\beta_P\)</span>, Beta(<span class="math notranslate nohighlight">\(\alpha\)</span>,<span class="math notranslate nohighlight">\(\beta\)</span>) distribution for A+ and A-, and a Gamma distribution for the rate of decay K. More research into this will result in accurate data synthesis. There is a possibility that peoples’ participation in the task will be predicted with high accuracy based on their information.</p>
+</div>
 </div>
 
 
