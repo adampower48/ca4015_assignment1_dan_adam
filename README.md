@@ -7,7 +7,8 @@ Requirements:
 - matplotlib
 - scikit-learn
 
-A full list of the packages used can be found in [requirements.txt](requirements.txt)  
+Install the dependencies with:  
+`pip install -r requirements.txt`  
 
 Build the book by running:  
 `jupyter-book clean book`  
