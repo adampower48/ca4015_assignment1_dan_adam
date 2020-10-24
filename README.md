@@ -7,7 +7,7 @@ Requirements:
 - matplotlib
 - scikit-learn
 
-A full list of the packages used can be found in [book/requirements.txt](./book/requirements.txt)  
+A full list of the packages used can be found in [requirements.txt](requirements.txt)  
 
 Build the book by running:  
 `jupyter-book clean book`  
@@ -15,4 +15,4 @@ Build the book by running:
 
 
 ## Viewing the book
-The landing page for the book can be found [here](./book/_build/html/intro.html)
+The book is hosted online [here](https://adampower48.github.io/ca4015_assignment1_dan_adam). It is automatically updated using [GitHub Actions](https://jupyterbook.org/publish/gh-pages.html).  
